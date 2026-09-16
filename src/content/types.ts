@@ -1,0 +1,80 @@
+export type NavItem = {
+  href: string
+  label: string
+}
+
+export type EventContent = {
+  coupleNames: string
+  partnerOne: string
+  partnerTwo: string
+  eventTitle: string
+  tagline: string
+  dateLabel: string
+  dateISO: string
+  timeLabel: string
+  venueName: string
+  venueAddress: string
+  mapUrl: string
+  dressCode: string
+  notes: string[]
+  payment: {
+    pixKey: string
+    pixKeyLabel: string
+    pixQrImageSrc: string | null
+    picPayDefaultUrl: string
+  }
+  formspree: {
+    messagesFormId: string
+    rsvpFormId: string
+  }
+  siteUrl: string
+  ogImage: string
+}
+
+export type StoryBlock = {
+  id: string
+  title: string
+  body: string
+  imageSrc?: string
+  imageAlt?: string
+}
+
+export type StoryContent = {
+  intro: string
+  blocks: StoryBlock[]
+}
+
+export type GiftItem = {
+  id: string
+  name: string
+  description: string
+  amountBRL: number
+  imageSrc?: string
+  picPayUrl?: string
+}
+
+export type SiteCopy = {
+  home: {
+    ctaGifts: string
+    ctaRsvp: string
+    supporting: string
+  }
+  gifts: {
+    title: string
+    intro: string
+    contributeCta: string
+  }
+  messages: {
+    title: string
+    intro: string
+    privacyNote: string
+  }
+  rsvp: {
+    title: string
+    intro: string
+  }
+  cha: {
+    title: string
+    intro: string
+  }
+}
