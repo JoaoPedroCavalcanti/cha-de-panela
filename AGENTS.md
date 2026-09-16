@@ -16,7 +16,7 @@ Branch de trabalho: `main`
 - **Mensagens aos noivos:** privadas (só o casal recebe) — form → Formspree, **sem mural público**
 - **RSVP / confirmar presença:** form no site → Formspree
 - Lista de presentes: placeholders inventados; casal define conteúdo real depois
-- Nomes reais: `Carol e João` (em `src/content/event.ts`)
+- Nomes reais: `Carol & João` (em `src/content/event.ts`)
 - Data/local/fotos reais: ainda placeholders em `src/content/`
 
 ## Abas / rotas
