@@ -5,9 +5,9 @@ import type { EventContent } from "./types"
  * Formspree IDs can also be overridden via NEXT_PUBLIC_FORMSPREE_* env vars.
  */
 export const event: EventContent = {
-  coupleNames: "Ana & Bruno",
-  partnerOne: "Ana",
-  partnerTwo: "Bruno",
+  coupleNames: "Carol e João",
+  partnerOne: "Carol",
+  partnerTwo: "João",
   eventTitle: "Chá de Panela",
   tagline: "Venha celebrar conosco o começo da nossa casa.",
   dateLabel: "Sábado, 15 de novembro de 2025",

@@ -37,7 +37,7 @@ Todo o texto/config fica em `src/content/`:
 - `nav.ts` — abas do menu
 - `copy.ts` — textos de UI das páginas
 
-Troque placeholders (nomes `Ana & Bruno`, chave PIX, etc.) antes do lançamento. Fotos: coloque arquivos em `public/` e referencie os caminhos nos content files.
+Troque placeholders (data, local, chave PIX, etc.) antes do lançamento. Fotos: coloque arquivos em `public/` e referencie os caminhos nos content files.
 
 ## Formspree (mensagens + RSVP)
 
