@@ -88,4 +88,4 @@ Mobile-first. Evitar visual genérico “AI purple/cream”.
 - Responsivo (prioridade celular)
 - Copy real em PT-BR (sem lorem)
 - Estados de form: idle / loading / success / error
-- Presentes nunca desaparecem após “pagamento"
+- Presentes nunca desaparecem após “pagamento”
