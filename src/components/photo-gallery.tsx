@@ -1,14 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { XIcon } from "lucide-react"
 
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog"
+import { PhotoLightbox } from "@/components/photo-lightbox"
 import { cn } from "@/lib/utils"
 
 export type GalleryPhoto = {
@@ -43,7 +37,7 @@ export function PhotoGallery({
             <button
               type="button"
               onClick={() => setActive(photo)}
-              className="group relative block w-full overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="group relative block w-full touch-manipulation overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               aria-label={`Ampliar: ${photo.alt}`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -65,42 +59,14 @@ export function PhotoGallery({
         ))}
       </div>
 
-      <Dialog
-        open={active !== null}
-        onOpenChange={(open) => {
-          if (!open) setActive(null)
-        }}
-      >
-        <DialogContent
-          showCloseButton={false}
-          className="max-h-[92svh] w-[min(100%,42rem)] max-w-[calc(100%-1.5rem)] gap-0 overflow-hidden border-0 bg-transparent p-0 shadow-none ring-0 sm:max-w-2xl"
-        >
-          <DialogTitle className="sr-only">
-            {active?.alt ?? "Foto ampliada"}
-          </DialogTitle>
-          <div className="relative">
-            <DialogClose
-              className="absolute top-3 right-3 z-10 inline-flex size-10 touch-manipulation items-center justify-center rounded-full bg-black/55 text-white"
-              aria-label="Fechar"
-            >
-              <XIcon className="size-5" />
-            </DialogClose>
-            {active ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={active.src}
-                alt={active.alt}
-                className="max-h-[85svh] w-full object-contain"
-              />
-            ) : null}
-            {active?.caption ? (
-              <p className="mt-3 text-center font-heading text-base italic text-white/90">
-                “{active.caption}”
-              </p>
-            ) : null}
-          </div>
-        </DialogContent>
-      </Dialog>
+      {active ? (
+        <PhotoLightbox
+          src={active.src}
+          alt={active.alt}
+          caption={active.caption}
+          onClose={() => setActive(null)}
+        />
+      ) : null}
     </>
   )
 }

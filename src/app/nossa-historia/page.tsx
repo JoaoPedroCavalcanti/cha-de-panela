@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 
+import { LightboxImage } from "@/components/lightbox-image"
 import { PageHero } from "@/components/page-hero"
 import { PhotoGallery } from "@/components/photo-gallery"
 import { story } from "@/content/story"
@@ -30,9 +31,8 @@ export default function NossaHistoriaPage() {
               {block.body}
             </p>
             {block.imageSrc ? (
-              <div className="mt-8 overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+              <div className="mt-8">
+                <LightboxImage
                   src={block.imageSrc}
                   alt={block.imageAlt ?? block.title}
                   className="aspect-[4/5] w-full object-cover sm:aspect-[16/10]"

@@ -5,6 +5,7 @@ import { useState } from "react"
 import type { GiftItem } from "@/content/types"
 import { copy } from "@/content/copy"
 import { formatBRL } from "@/lib/format"
+import { LightboxImage } from "@/components/lightbox-image"
 import { Button } from "@/components/ui/button"
 import { PaymentSheet } from "@/components/payment-sheet"
 
@@ -29,13 +30,13 @@ export function GiftGrid({ items }: GiftGridProps) {
             key={gift.id}
             className="flex flex-col border-b border-border/70 pb-6 transition-opacity hover:opacity-95"
           >
-            <div className="mb-4 flex aspect-[4/3] items-center justify-center bg-muted/50">
+            <div className="mb-4 flex aspect-[4/3] items-center justify-center overflow-hidden bg-muted/50">
               {gift.imageSrc ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <LightboxImage
                   src={gift.imageSrc}
                   alt={gift.name}
                   className="h-full w-full object-cover"
+                  buttonClassName="h-full"
                 />
               ) : (
                 <span className="font-heading text-3xl text-muted-foreground/40">
