@@ -8,15 +8,14 @@ import { MenuIcon, XIcon } from "lucide-react"
 import { navItems } from "@/content/nav"
 import { event } from "@/content/event"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 
 export function SiteHeader() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/90 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+    <header className="sticky top-0 z-50 border-b border-border/60 bg-background">
+      <div className="relative z-50 mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link
           href="/"
           className="font-heading text-xl tracking-tight text-foreground sm:text-2xl"
@@ -45,24 +44,22 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <Button
+        <button
           type="button"
-          variant="ghost"
-          size="icon"
-          className="lg:hidden"
+          className="relative z-50 inline-flex size-11 touch-manipulation items-center justify-center rounded-lg text-foreground lg:hidden"
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Fechar menu" : "Abrir menu"}
           onClick={() => setOpen((v) => !v)}
         >
-          {open ? <XIcon /> : <MenuIcon />}
-        </Button>
+          {open ? <XIcon className="size-5" /> : <MenuIcon className="size-5" />}
+        </button>
       </div>
 
       {open ? (
         <nav
           id="mobile-nav"
-          className="border-t border-border/60 bg-background px-4 py-4 lg:hidden"
+          className="relative z-50 border-t border-border/60 bg-background px-4 py-4 lg:hidden"
           aria-label="Menu mobile"
         >
           <ul className="flex flex-col gap-1">
