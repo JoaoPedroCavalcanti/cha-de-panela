@@ -3,7 +3,6 @@ import Link from "next/link"
 import { ExternalLinkIcon } from "lucide-react"
 
 import { buttonVariants } from "@/components/ui/button"
-import { copy } from "@/content/copy"
 import { event } from "@/content/event"
 import { cn } from "@/lib/utils"
 
@@ -15,146 +14,127 @@ export const metadata: Metadata = {
 export default function ChaDePanelaPage() {
   return (
     <div>
-      {/* Invitation opening */}
-      <section className="relative overflow-hidden border-b border-border/40">
+      {/* Photo-led opening — same language as home */}
+      <section className="relative isolate min-h-[72svh] overflow-hidden sm:min-h-[78svh]">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/photos/historia-noite.jpg"
+          alt="Carol e João"
+          className="absolute inset-0 h-full w-full object-cover object-[center_35%]"
+        />
+        <div aria-hidden className="absolute inset-0 bg-black/45" />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,oklch(0.93_0.03_140/0.55),transparent_55%),radial-gradient(ellipse_at_bottom_right,oklch(0.94_0.02_85/0.7),transparent_50%)]"
+          className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/25"
         />
-        <div className="relative mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 sm:py-24">
-          <p className="text-[11px] font-medium tracking-[0.32em] text-muted-foreground uppercase animate-in fade-in duration-700">
+        <div className="relative mx-auto flex min-h-[72svh] max-w-4xl flex-col items-center justify-end px-4 pb-14 pt-28 text-center sm:min-h-[78svh] sm:px-6 sm:pb-20">
+          <p className="text-[11px] font-medium tracking-[0.3em] text-white/80 uppercase drop-shadow-sm animate-in fade-in duration-700">
             {event.coupleNames}
           </p>
-          <h1 className="mt-6 font-heading text-5xl leading-[1.05] text-foreground sm:text-6xl md:text-7xl animate-in fade-in slide-in-from-bottom-2 duration-1000">
-            {copy.cha.title}
+          <h1 className="mt-4 font-heading text-5xl leading-[1.05] text-white drop-shadow-md sm:text-6xl md:text-7xl animate-in fade-in slide-in-from-bottom-2 duration-1000">
+            {event.eventTitle}
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg animate-in fade-in duration-1000 delay-150">
-            {copy.cha.intro}
+          <p className="mt-5 text-[11px] font-medium tracking-[0.22em] text-white/85 uppercase drop-shadow-sm sm:text-xs animate-in fade-in duration-1000 delay-150">
+            {event.dateLabel} · {event.timeLabel}
           </p>
         </div>
       </section>
 
-      {/* Big date / time */}
-      <section className="border-b border-border/40 bg-foreground text-background">
-        <div className="mx-auto flex max-w-5xl flex-col items-center gap-8 px-4 py-14 text-center sm:flex-row sm:justify-between sm:gap-12 sm:px-6 sm:py-16 sm:text-left">
-          <div className="animate-in fade-in slide-in-from-bottom-2 duration-700">
-            <p className="text-[11px] tracking-[0.22em] text-background/55 uppercase">Quando</p>
-            <p className="mt-3 font-heading text-3xl leading-tight sm:text-4xl md:text-5xl">
-              {event.dateLabel}
-            </p>
-          </div>
-          <div
-            aria-hidden
-            className="hidden h-16 w-px bg-background/20 sm:block"
-          />
-          <div className="animate-in fade-in slide-in-from-bottom-2 duration-700 delay-100">
-            <p className="text-[11px] tracking-[0.22em] text-background/55 uppercase">Horário</p>
-            <p className="mt-3 font-heading text-3xl leading-tight sm:text-4xl md:text-5xl">
-              {event.timeLabel}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Venue with photo */}
-      <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-2 lg:gap-16">
-        <div className="order-2 lg:order-1 animate-in fade-in slide-in-from-bottom-2 duration-700">
-          <p className="text-[11px] tracking-[0.22em] text-muted-foreground uppercase">Onde</p>
-          <h2 className="mt-4 font-heading text-4xl text-foreground sm:text-5xl">
-            {event.venueName}
-          </h2>
-          <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg">
-            {event.venueAddress}
+      {/* Invitation letter */}
+      <section className="bg-background">
+        <div className="mx-auto max-w-xl px-6 py-20 text-center sm:py-28">
+          <p className="font-heading text-2xl leading-snug text-foreground sm:text-3xl animate-in fade-in duration-700">
+            Com alegria, convidamos vocês para celebrar conosco o começo da nossa
+            casa.
           </p>
-          <a
-            href={event.mapUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(buttonVariants({ size: "lg" }), "mt-8 inline-flex")}
-          >
-            Como chegar
-            <ExternalLinkIcon />
-          </a>
-        </div>
 
-        <figure className="order-1 overflow-hidden lg:order-2 animate-in fade-in duration-1000">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/photos/casa-nova.jpg"
-            alt="Local do chá de panela — a nova casa"
-            className="aspect-[4/5] w-full object-cover sm:aspect-[5/6]"
-          />
-        </figure>
-      </section>
+          <div className="mx-auto mt-12 h-px w-12 bg-foreground/20" />
 
-      {/* Dress code band */}
-      <section className="relative overflow-hidden border-y border-border/50 bg-[oklch(0.95_0.025_140)]">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,oklch(0.98_0.01_85/0.8),transparent_45%)]"
-        />
-        <div className="relative mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 sm:py-20">
-          <p className="text-[11px] tracking-[0.22em] text-muted-foreground uppercase">
-            Dress code
-          </p>
-          <p className="mt-5 font-heading text-3xl text-foreground sm:text-4xl md:text-5xl">
-            {event.dressCode}
-          </p>
-          <p className="mx-auto mt-5 max-w-md text-muted-foreground">
-            Venha confortável e com vontade de celebrar — o clima é de casa cheia e mesa posta.
-          </p>
-        </div>
-      </section>
-
-      {/* Notes */}
-      <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
-        <h2 className="text-center font-heading text-3xl text-foreground sm:text-4xl">
-          Para facilitar o dia
-        </h2>
-        <ol className="mt-12 space-y-10">
-          {event.notes.map((note, index) => (
-            <li
-              key={note}
-              className="flex gap-5 sm:gap-8 animate-in fade-in slide-in-from-bottom-2 duration-700"
-              style={{ animationDelay: `${index * 80}ms` }}
-            >
-              <span className="font-heading text-3xl leading-none text-foreground/25 sm:text-4xl">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <p className="pt-1 text-base leading-relaxed text-muted-foreground sm:text-lg">
-                {note}
+          <div className="mt-12 space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-1000">
+            <div>
+              <p className="text-[11px] tracking-[0.24em] text-muted-foreground uppercase">
+                Quando
               </p>
-            </li>
-          ))}
-        </ol>
+              <p className="mt-3 font-heading text-3xl text-foreground sm:text-[2.5rem]">
+                {event.dateLabel}
+              </p>
+              <p className="mt-2 text-lg text-foreground/70">às {event.timeLabel}</p>
+            </div>
+
+            <div>
+              <p className="text-[11px] tracking-[0.24em] text-muted-foreground uppercase">
+                Onde
+              </p>
+              <p className="mt-3 font-heading text-3xl text-foreground sm:text-[2.5rem]">
+                {event.venueName}
+              </p>
+              <p className="mx-auto mt-3 max-w-sm text-base leading-relaxed text-muted-foreground">
+                {event.venueAddress}
+              </p>
+              <a
+                href={event.mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-foreground underline decoration-foreground/25 underline-offset-4 transition-colors hover:decoration-foreground"
+              >
+                Ver no mapa
+                <ExternalLinkIcon className="size-3.5 opacity-70" />
+              </a>
+            </div>
+
+            <div>
+              <p className="text-[11px] tracking-[0.24em] text-muted-foreground uppercase">
+                Traje
+              </p>
+              <p className="mt-3 font-heading text-2xl text-foreground sm:text-3xl">
+                {event.dressCode}
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* Closing CTAs */}
-      <section className="border-t border-border/50 bg-muted/35">
-        <div className="mx-auto flex max-w-3xl flex-col items-center px-4 py-16 text-center sm:px-6 sm:py-20">
-          <p className="font-heading text-3xl text-foreground sm:text-4xl">
-            Contamos com você
+      {/* House */}
+      <section className="relative">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/photos/casa-nova.jpg"
+          alt="A casa onde vamos morar"
+          className="aspect-[4/5] w-full object-cover sm:aspect-[16/9]"
+        />
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-4 py-10 sm:py-12">
+          <p className="text-center text-[11px] tracking-[0.22em] text-white/75 uppercase">
+            Nossa casa
           </p>
-          <p className="mt-4 max-w-md text-muted-foreground">
-            Confirme presença e, se quiser, dê uma olhada na lista de presentes.
+          <p className="mt-2 text-center font-heading text-2xl text-white sm:text-3xl">
+            Onde a festa — e a vida nova — acontecem
           </p>
-          <div className="mt-9 flex w-full max-w-md flex-col gap-3 sm:flex-row sm:justify-center">
-            <Link
-              href="/confirmar-presenca"
-              className={cn(buttonVariants({ size: "lg" }), "w-full sm:w-auto")}
+        </div>
+      </section>
+
+      {/* Details */}
+      <section className="mx-auto max-w-lg px-6 py-20 sm:py-24">
+        <p className="text-center text-[11px] tracking-[0.24em] text-muted-foreground uppercase">
+          Detalhes
+        </p>
+        <div className="mt-10 space-y-6">
+          {event.notes.map((note) => (
+            <p
+              key={note}
+              className="text-center text-base leading-relaxed text-foreground/70 sm:text-lg"
             >
-              Confirmar presença
-            </Link>
-            <Link
-              href="/presentes"
-              className={cn(
-                buttonVariants({ size: "lg", variant: "outline" }),
-                "w-full sm:w-auto"
-              )}
-            >
-              Ver presentes
-            </Link>
-          </div>
+              {note}
+            </p>
+          ))}
+        </div>
+
+        <div className="mt-14 flex justify-center">
+          <Link
+            href="/confirmar-presenca"
+            className={cn(buttonVariants({ size: "lg" }), "inline-flex")}
+          >
+            Confirmar presença
+          </Link>
         </div>
       </section>
     </div>
