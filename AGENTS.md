@@ -23,7 +23,7 @@ Branch de trabalho: `main`
 ## Abas / rotas
 | Rota | Aba |
 |---|---|
-| `/` | Home (hero + CTAs) |
+| `/` | Início (hero + CTAs) |
 | `/nossa-historia` | Nossa história |
 | `/cha-de-panela` | Chá de panela (data, local, infos) |
 | `/mensagens` | Mensagens aos noivos (form privado) |
