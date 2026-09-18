@@ -135,18 +135,7 @@ export function RsvpForm() {
           name="phone"
           required
           autoComplete="tel"
-          placeholder="(11) 99999-9999"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="email">E-mail</Label>
-        <Input
-          id="email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          placeholder="voce@email.com"
+          placeholder="(84) 99999-9999"
         />
       </div>
 
