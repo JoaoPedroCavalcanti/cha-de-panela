@@ -2,7 +2,7 @@ import type { StoryContent } from "./types"
 
 export const story: StoryContent = {
   intro:
-    "Uma história feita de risada alta, jantares longos, carnaval na rua e um doguinho que virou família. Aqui vai um pedacinho do caminho até o chá de panela.",
+    "Uma história feita de risada alta, jantares longos, carnaval na rua e o Tito, que virou família. Aqui vai um pedacinho do caminho até o chá de panela.",
   blocks: [
     {
       id: "match",
@@ -21,7 +21,7 @@ export const story: StoryContent = {
     {
       id: "nossa-casa",
       title: "Montando a nossa casa",
-      body: "Essa é a casinha onde vamos construir o nosso ninho. Entre o doguinho da família, as conquistas do dia a dia e a vontade de ter um lar com a nossa cara, este chá de panela é o jeito que escolhemos de reunir quem amamos. A presença de vocês já é presente — e cada contribuição ajuda a gente a deixar essa casa ainda mais nossa, panelinha por panelinha.",
+      body: "Essa é a casinha onde vamos construir o nosso ninho. Entre o Tito, as conquistas do dia a dia e a vontade de ter um lar com a nossa cara, este chá de panela é o jeito que escolhemos de reunir quem amamos. A presença de vocês já é presente — e cada contribuição ajuda a gente a deixar essa casa ainda mais nossa, panelinha por panelinha.",
       imageSrc: "/photos/casa-nova.jpg",
       imageAlt: "A casa onde Carol e João vão morar",
     },

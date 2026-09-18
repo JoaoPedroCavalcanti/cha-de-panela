@@ -26,6 +26,7 @@ Branch de trabalho: `main`
 | `/` | Início (hero + CTAs) |
 | `/nossa-historia` | Nossa história |
 | `/cha-de-panela` | Chá de panela (data, local, infos) |
+| `/tito` | Tito (cachorrinho / brincadeira) |
 | `/mensagens` | Mensagens aos noivos (form privado) |
 | `/presentes` | Presentes |
 | `/confirmar-presenca` | Confirmar presença |
