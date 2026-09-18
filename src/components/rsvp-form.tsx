@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { cn } from "@/lib/utils"
 
 type FormStatus = "idle" | "loading" | "success" | "error"
 
@@ -180,51 +181,65 @@ export function RsvpForm() {
         </div>
       </fieldset>
 
-      {attending === "sim" ? (
-        <fieldset className="space-y-3">
-          <legend className="text-sm font-medium">Acompanhantes</legend>
-          <p className="text-sm text-muted-foreground">
-            Se vier acompanhado(a), adicione o nome de cada pessoa. Sozinho(a)? Pode
-            deixar em branco.
-          </p>
+      <fieldset
+        className={cn(
+          "space-y-3 transition-opacity",
+          attending === "nao" && "pointer-events-none opacity-40"
+        )}
+        disabled={attending === "nao"}
+        aria-disabled={attending === "nao"}
+      >
+        <legend className="text-sm font-medium">Acompanhantes</legend>
+        <p className="text-sm text-muted-foreground">
+          {attending === "nao"
+            ? "Disponível apenas se você confirmar presença."
+            : "Se vier acompanhado(a), adicione o nome de cada pessoa. Sozinho(a)? Pode deixar em branco."}
+        </p>
 
-          {companions.length > 0 ? (
-            <ul className="space-y-3">
-              {companions.map((companion, index) => (
-                <li key={companion.id} className="flex items-end gap-2">
-                  <div className="min-w-0 flex-1 space-y-2">
-                    <Label htmlFor={`companion-${companion.id}`}>
-                      Nome do acompanhante {index + 1}
-                    </Label>
-                    <Input
-                      id={`companion-${companion.id}`}
-                      value={companion.name}
-                      onChange={(e) => updateCompanion(companion.id, e.target.value)}
-                      placeholder="Nome completo"
-                      autoComplete="off"
-                    />
-                  </div>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon"
-                    className="shrink-0"
-                    aria-label={`Remover acompanhante ${index + 1}`}
-                    onClick={() => removeCompanion(companion.id)}
-                  >
-                    <XIcon />
-                  </Button>
-                </li>
-              ))}
-            </ul>
-          ) : null}
+        {companions.length > 0 ? (
+          <ul className="space-y-3">
+            {companions.map((companion, index) => (
+              <li key={companion.id} className="flex items-end gap-2">
+                <div className="min-w-0 flex-1 space-y-2">
+                  <Label htmlFor={`companion-${companion.id}`}>
+                    Nome do acompanhante {index + 1}
+                  </Label>
+                  <Input
+                    id={`companion-${companion.id}`}
+                    value={companion.name}
+                    onChange={(e) => updateCompanion(companion.id, e.target.value)}
+                    placeholder="Nome completo"
+                    autoComplete="off"
+                    disabled={attending === "nao"}
+                  />
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  className="shrink-0"
+                  aria-label={`Remover acompanhante ${index + 1}`}
+                  onClick={() => removeCompanion(companion.id)}
+                  disabled={attending === "nao"}
+                >
+                  <XIcon />
+                </Button>
+              </li>
+            ))}
+          </ul>
+        ) : null}
 
-          <Button type="button" variant="outline" size="sm" onClick={addCompanion}>
-            <PlusIcon />
-            Adicionar acompanhante
-          </Button>
-        </fieldset>
-      ) : null}
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={addCompanion}
+          disabled={attending === "nao"}
+        >
+          <PlusIcon />
+          Adicionar acompanhante
+        </Button>
+      </fieldset>
 
       <div className="space-y-2">
         <Label htmlFor="notes">Observações</Label>
