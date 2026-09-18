@@ -35,6 +35,7 @@ export function GiftGrid({ items }: GiftGridProps) {
                 <LightboxImage
                   src={gift.imageSrc}
                   alt={gift.name}
+                  lightboxId={`presente-${gift.id}`}
                   className="h-full w-full object-cover"
                   buttonClassName="h-full"
                 />

@@ -44,6 +44,7 @@ export default function TitoPage() {
         </p>
         <PhotoGallery
           photos={tito.photos}
+          idPrefix="tito"
           showCaptions
           className="mt-10"
         />

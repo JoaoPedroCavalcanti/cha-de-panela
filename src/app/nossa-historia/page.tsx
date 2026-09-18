@@ -42,6 +42,7 @@ export default function NossaHistoriaPage() {
                 <LightboxImage
                   src={block.imageSrc}
                   alt={block.imageAlt ?? block.title}
+                  lightboxId={`historia-${block.id}`}
                   album={storyPhotos}
                   className="aspect-[4/5] w-full object-cover sm:aspect-[16/10]"
                 />
@@ -60,7 +61,7 @@ export default function NossaHistoriaPage() {
             <p className="mx-auto mt-3 max-w-lg text-center text-muted-foreground">
               Alguns recortes do caminho — carnaval, jantares, alianças e a família de quatro patas.
             </p>
-            <PhotoGallery photos={story.gallery} className="mt-10" />
+            <PhotoGallery photos={story.gallery} idPrefix="momentos" className="mt-10" />
           </div>
         </section>
       ) : null}

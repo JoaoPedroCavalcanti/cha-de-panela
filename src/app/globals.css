@@ -104,3 +104,109 @@
     letter-spacing: -0.02em;
   }
 }
+
+/* CSS-only photo lightbox (:target) — works without JS on mobile */
+@layer components {
+  .photo-lb-close-anchor {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  .photo-lb {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    align-items: center;
+    justify-content: center;
+    padding: 3.5rem 0.75rem 1.5rem;
+    background: rgb(0 0 0 / 0.92);
+  }
+
+  .photo-lb:target {
+    display: flex;
+  }
+
+  .photo-lb-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .photo-lb-frame {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    max-height: 100%;
+    max-width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .photo-lb-img {
+    max-height: min(80svh, 100%);
+    max-width: min(100%, 42rem);
+    object-fit: contain;
+  }
+
+  .photo-lb-btn {
+    position: absolute;
+    z-index: 2;
+    display: inline-flex;
+    height: 2.75rem;
+    width: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: rgb(255 255 255 / 0.15);
+    color: white;
+    font-size: 1.75rem;
+    line-height: 1;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .photo-lb-close {
+    top: 0.75rem;
+    right: 0.75rem;
+    position: fixed;
+    font-size: 1.5rem;
+  }
+
+  .photo-lb-prev {
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .photo-lb-next {
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .photo-lb-count {
+    position: fixed;
+    top: 1.25rem;
+    left: 50%;
+    z-index: 2;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: rgb(255 255 255 / 0.7);
+  }
+
+  .photo-lb-caption {
+    margin-top: 1rem;
+    max-width: 28rem;
+    text-align: center;
+    font-family: var(--font-heading), ui-serif, Georgia, serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: rgb(255 255 255 / 0.9);
+  }
+}
