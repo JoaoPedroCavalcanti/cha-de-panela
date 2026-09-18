@@ -4,7 +4,7 @@ import { useState, type FormEvent } from "react"
 import { PlusIcon, XIcon } from "lucide-react"
 
 import { event } from "@/content/event"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -23,7 +23,10 @@ function resolveEndpoint(formId: string) {
 }
 
 function newCompanion(): Companion {
-  return { id: crypto.randomUUID(), name: "" }
+  return {
+    id: `c-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+    name: "",
+  }
 }
 
 export function RsvpForm() {
@@ -33,6 +36,7 @@ export function RsvpForm() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const endpoint = resolveEndpoint(event.formspree.rsvpFormId)
+  const companionsEnabled = attending === "sim"
 
   function resetCompanions() {
     setCompanions([])
@@ -67,10 +71,9 @@ export function RsvpForm() {
     data.set("formType", "rsvp")
     data.set("attending", attending)
 
-    const companionNames =
-      attending === "sim"
-        ? companions.map((c) => c.name.trim()).filter(Boolean)
-        : []
+    const companionNames = companionsEnabled
+      ? companions.map((c) => c.name.trim()).filter(Boolean)
+      : []
 
     data.set(
       "companions",
@@ -109,14 +112,13 @@ export function RsvpForm() {
         <p className="mt-3 text-muted-foreground">
           Obrigado! Qualquer mudança, é só enviar de novo.
         </p>
-        <Button
+        <button
           type="button"
-          variant="outline"
-          className="mt-6"
+          className={cn(buttonVariants({ variant: "outline" }), "mt-6")}
           onClick={() => setStatus("idle")}
         >
           Nova confirmação
-        </Button>
+        </button>
       </div>
     )
   }
@@ -170,19 +172,17 @@ export function RsvpForm() {
         </div>
       </fieldset>
 
-      <fieldset
+      <div
         className={cn(
           "space-y-3 transition-opacity",
-          attending === "nao" && "pointer-events-none opacity-40"
+          !companionsEnabled && "opacity-40"
         )}
-        disabled={attending === "nao"}
-        aria-disabled={attending === "nao"}
       >
-        <legend className="text-sm font-medium">Acompanhantes</legend>
+        <p className="text-sm font-medium">Acompanhantes</p>
         <p className="text-sm text-muted-foreground">
-          {attending === "nao"
-            ? "Disponível apenas se você confirmar presença."
-            : "Se vier acompanhado(a), adicione o nome de cada pessoa. Sozinho(a)? Pode deixar em branco."}
+          {companionsEnabled
+            ? "Se vier acompanhado(a), adicione o nome de cada pessoa. Sozinho(a)? Pode deixar em branco."
+            : "Disponível apenas se você confirmar presença."}
         </p>
 
         {companions.length > 0 ? (
@@ -193,42 +193,56 @@ export function RsvpForm() {
                   <Label htmlFor={`companion-${companion.id}`}>
                     Nome do acompanhante {index + 1}
                   </Label>
-                  <Input
+                  <input
                     id={`companion-${companion.id}`}
+                    name={`companionName_${index + 1}`}
                     value={companion.name}
                     onChange={(e) => updateCompanion(companion.id, e.target.value)}
                     placeholder="Nome completo"
                     autoComplete="off"
-                    disabled={attending === "nao"}
+                    disabled={!companionsEnabled}
+                    className={cn(
+                      "h-9 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 text-base outline-none",
+                      "placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+                      "disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                    )}
                   />
                 </div>
-                <Button
+                <button
                   type="button"
-                  variant="outline"
-                  size="icon"
-                  className="shrink-0"
+                  className={cn(
+                    buttonVariants({ variant: "outline", size: "icon" }),
+                    "shrink-0 touch-manipulation"
+                  )}
                   aria-label={`Remover acompanhante ${index + 1}`}
                   onClick={() => removeCompanion(companion.id)}
-                  disabled={attending === "nao"}
+                  disabled={!companionsEnabled}
                 >
-                  <XIcon />
-                </Button>
+                  <XIcon className="size-4" />
+                </button>
               </li>
             ))}
           </ul>
         ) : null}
 
-        <Button
+        <button
           type="button"
-          variant="outline"
-          size="sm"
-          onClick={addCompanion}
-          disabled={attending === "nao"}
+          className={cn(
+            buttonVariants({ variant: "outline", size: "sm" }),
+            "touch-manipulation"
+          )}
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            if (!companionsEnabled) return
+            addCompanion()
+          }}
+          disabled={!companionsEnabled}
         >
-          <PlusIcon />
+          <PlusIcon className="size-4" />
           Adicionar acompanhante
-        </Button>
-      </fieldset>
+        </button>
+      </div>
 
       <div className="space-y-2">
         <Label htmlFor="notes">Observações</Label>
