@@ -26,6 +26,6 @@ export const copy: SiteCopy = {
   cha: {
     title: "Chá de panela",
     intro:
-      "Um encontro para celebrar a nova casa: conversa boa, mesa posta e a alegria de reunir quem importa.",
+      "Um encontro íntimo para celebrar a nova casa — conversa boa, mesa posta e a alegria de reunir quem importa.",
   },
 }
