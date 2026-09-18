@@ -21,9 +21,9 @@ export const story: StoryContent = {
     {
       id: "nossa-casa",
       title: "Montando a nossa casa",
-      body: "Entre conquistas do dia a dia, viagens, o doguinho da casa e a vontade de ter um lar com a nossa cara, este chá de panela é o jeito que escolhemos de reunir quem amamos. A presença de vocês já é presente — e cada contribuição ajuda a gente a construir a casa dos sonhos, panelinha por panelinha.",
-      imageSrc: "/photos/familia-carol-cao.jpg",
-      imageAlt: "Carol com o doguinho da família",
+      body: "Essa é a casinha onde vamos construir o nosso ninho. Entre o doguinho da família, as conquistas do dia a dia e a vontade de ter um lar com a nossa cara, este chá de panela é o jeito que escolhemos de reunir quem amamos. A presença de vocês já é presente — e cada contribuição ajuda a gente a deixar essa casa ainda mais nossa, panelinha por panelinha.",
+      imageSrc: "/photos/casa-nova.jpg",
+      imageAlt: "A casa onde Carol e João vão morar",
     },
   ],
   gallery: [
@@ -54,6 +54,10 @@ export const story: StoryContent = {
     {
       src: "/photos/galeria-viagem.jpg",
       alt: "Carol em uma viagem",
+    },
+    {
+      src: "/photos/familia-carol-cao.jpg",
+      alt: "Carol com o doguinho da família",
     },
     {
       src: "/photos/familia-cao.jpg",
