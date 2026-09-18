@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 
+import { PhotoGallery } from "@/components/photo-gallery"
 import { tito } from "@/content/tito"
 
 export const metadata: Metadata = {
@@ -41,26 +42,14 @@ export default function TitoPage() {
         <p className="text-center text-[11px] tracking-[0.24em] text-muted-foreground uppercase">
           Arquivo oficial
         </p>
-        <div className="mt-10 columns-1 gap-8 sm:columns-2 sm:gap-6 lg:columns-3">
-          {tito.photos.map((photo) => (
-            <figure key={photo.src} className="mb-10 break-inside-avoid">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={photo.src}
-                alt={photo.alt}
-                className="w-full object-cover"
-              />
-              <figcaption className="mt-4 text-center">
-                <span className="font-heading text-base italic leading-snug text-foreground/75 sm:text-lg">
-                  “{photo.caption}”
-                </span>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
+        <PhotoGallery
+          photos={tito.photos}
+          showCaptions
+          className="mt-10"
+        />
       </section>
 
-      <p className="mx-auto mt-8 max-w-xl text-center font-heading text-2xl text-foreground sm:text-3xl">
+      <p className="mx-auto mt-10 max-w-xl text-center font-heading text-2xl text-foreground sm:text-3xl">
         {tito.closing}
       </p>
     </div>

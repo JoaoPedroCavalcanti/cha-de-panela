@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 
 import { PageHero } from "@/components/page-hero"
+import { PhotoGallery } from "@/components/photo-gallery"
 import { story } from "@/content/story"
 
 export const metadata: Metadata = {
@@ -51,18 +52,7 @@ export default function NossaHistoriaPage() {
             <p className="mx-auto mt-3 max-w-lg text-center text-muted-foreground">
               Alguns recortes do caminho — carnaval, jantares, alianças e a família de quatro patas.
             </p>
-            <div className="mt-10 columns-1 gap-3 sm:columns-2 sm:gap-4 lg:columns-3">
-              {story.gallery.map((item) => (
-                <figure key={item.src} className="mb-3 break-inside-avoid sm:mb-4">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    className="w-full object-cover"
-                  />
-                </figure>
-              ))}
-            </div>
+            <PhotoGallery photos={story.gallery} className="mt-10" />
           </div>
         </section>
       ) : null}
