@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils"
 type LightboxImageProps = Omit<ComponentProps<"img">, "onClick"> & {
   caption?: string
   buttonClassName?: string
+  /** Optional album so arrows can browse related photos */
+  album?: { src: string; alt: string; caption?: string }[]
 }
 
 export function LightboxImage({
@@ -16,19 +18,32 @@ export function LightboxImage({
   caption,
   className,
   buttonClassName,
+  album,
   ...imgProps
 }: LightboxImageProps) {
   const [open, setOpen] = useState(false)
+  const [index, setIndex] = useState(0)
 
-  if (!src) return null
+  if (!src || typeof src !== "string") return null
+
+  const photos =
+    album && album.length > 0
+      ? album
+      : [{ src, alt, caption }]
+
+  function openAt() {
+    const start = photos.findIndex((p) => p.src === src)
+    setIndex(start >= 0 ? start : 0)
+    setOpen(true)
+  }
 
   return (
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={openAt}
         className={cn(
-          "block w-full overflow-hidden touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+          "block w-full touch-manipulation overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
           buttonClassName
         )}
         aria-label={`Ampliar: ${alt}`}
@@ -39,9 +54,9 @@ export function LightboxImage({
 
       {open ? (
         <PhotoLightbox
-          src={typeof src === "string" ? src : ""}
-          alt={alt}
-          caption={caption}
+          photos={photos}
+          index={index}
+          onIndexChange={setIndex}
           onClose={() => setOpen(false)}
         />
       ) : null}

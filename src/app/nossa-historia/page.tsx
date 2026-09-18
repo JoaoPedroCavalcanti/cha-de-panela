@@ -11,6 +11,13 @@ export const metadata: Metadata = {
 }
 
 export default function NossaHistoriaPage() {
+  const storyPhotos = story.blocks
+    .filter((b) => b.imageSrc)
+    .map((b) => ({
+      src: b.imageSrc!,
+      alt: b.imageAlt ?? b.title,
+    }))
+
   return (
     <div>
       <PageHero title="Nossa história" description={story.intro} />
@@ -35,6 +42,7 @@ export default function NossaHistoriaPage() {
                 <LightboxImage
                   src={block.imageSrc}
                   alt={block.imageAlt ?? block.title}
+                  album={storyPhotos}
                   className="aspect-[4/5] w-full object-cover sm:aspect-[16/10]"
                 />
               </div>

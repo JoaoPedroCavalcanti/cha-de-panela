@@ -22,7 +22,7 @@ export function PhotoGallery({
   className,
   showCaptions = false,
 }: PhotoGalleryProps) {
-  const [active, setActive] = useState<GalleryPhoto | null>(null)
+  const [index, setIndex] = useState<number | null>(null)
 
   return (
     <>
@@ -32,11 +32,11 @@ export function PhotoGallery({
           className
         )}
       >
-        {photos.map((photo) => (
+        {photos.map((photo, i) => (
           <figure key={photo.src} className="min-w-0">
             <button
               type="button"
-              onClick={() => setActive(photo)}
+              onClick={() => setIndex(i)}
               className="group relative block w-full touch-manipulation overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               aria-label={`Ampliar: ${photo.alt}`}
             >
@@ -59,12 +59,12 @@ export function PhotoGallery({
         ))}
       </div>
 
-      {active ? (
+      {index !== null ? (
         <PhotoLightbox
-          src={active.src}
-          alt={active.alt}
-          caption={active.caption}
-          onClose={() => setActive(null)}
+          photos={photos}
+          index={index}
+          onIndexChange={setIndex}
+          onClose={() => setIndex(null)}
         />
       ) : null}
     </>
