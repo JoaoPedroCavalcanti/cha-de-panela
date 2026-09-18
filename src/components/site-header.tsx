@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useState } from "react"
 import { MenuIcon, XIcon } from "lucide-react"
 
 import { navItems } from "@/content/nav"
@@ -11,15 +10,13 @@ import { cn } from "@/lib/utils"
 
 export function SiteHeader() {
   const pathname = usePathname()
-  const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background">
-      <div className="relative z-50 mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+    <header className="sticky top-0 z-[100] border-b border-border/60 bg-background">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
         <Link
           href="/"
-          className="font-heading text-xl tracking-tight text-foreground sm:text-2xl"
-          onClick={() => setOpen(false)}
+          className="relative z-[101] font-heading text-xl tracking-tight text-foreground sm:text-2xl"
         >
           {event.coupleNames}
         </Link>
@@ -44,47 +41,46 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <button
-          type="button"
-          className="relative z-50 inline-flex size-11 touch-manipulation items-center justify-center rounded-lg text-foreground lg:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          aria-label={open ? "Fechar menu" : "Abrir menu"}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <XIcon className="size-5" /> : <MenuIcon className="size-5" />}
-        </button>
-      </div>
+        {/* Native details menu: works even if JS hydration fails on mobile/tunnel */}
+        <details className="group relative z-[101] lg:hidden">
+          <summary
+            className={cn(
+              "flex size-12 list-none cursor-pointer touch-manipulation items-center justify-center rounded-lg text-foreground",
+              "[&::-webkit-details-marker]:hidden [-webkit-tap-highlight-color:transparent]"
+            )}
+            aria-label="Abrir menu"
+          >
+            <MenuIcon className="size-6 group-open:hidden" aria-hidden />
+            <XIcon className="hidden size-6 group-open:block" aria-hidden />
+          </summary>
 
-      {open ? (
-        <nav
-          id="mobile-nav"
-          className="relative z-50 border-t border-border/60 bg-background px-4 py-4 lg:hidden"
-          aria-label="Menu mobile"
-        >
-          <ul className="flex flex-col gap-1">
-            {navItems.map((item) => {
-              const active = pathname === item.href
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    className={cn(
-                      "block rounded-md px-3 py-3 text-sm tracking-wide transition-colors",
-                      active
-                        ? "bg-muted text-foreground"
-                        : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
-                    )}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
-        </nav>
-      ) : null}
+          <nav
+            className="fixed inset-x-0 top-16 z-[100] max-h-[calc(100svh-4rem)] overflow-y-auto border-b border-border/60 bg-background px-4 py-3 shadow-sm"
+            aria-label="Menu mobile"
+          >
+            <ul className="flex flex-col">
+              {navItems.map((item) => {
+                const active = pathname === item.href
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "block rounded-md px-3 py-3.5 text-base tracking-wide",
+                        active
+                          ? "bg-muted text-foreground"
+                          : "text-foreground/80 active:bg-muted/60"
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </nav>
+        </details>
+      </div>
     </header>
   )
 }
