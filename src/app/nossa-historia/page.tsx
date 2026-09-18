@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 
 import { PageHero } from "@/components/page-hero"
-import { copy } from "@/content/copy"
 import { story } from "@/content/story"
 
 export const metadata: Metadata = {
@@ -13,11 +12,11 @@ export default function NossaHistoriaPage() {
   return (
     <div>
       <PageHero title="Nossa história" description={story.intro} />
-      <div className="mx-auto max-w-3xl space-y-16 px-4 py-14 sm:px-6 sm:py-20">
+      <div className="mx-auto max-w-3xl space-y-20 px-4 py-14 sm:px-6 sm:py-20">
         {story.blocks.map((block, index) => (
           <article
             key={block.id}
-            className="scroll-mt-24"
+            className="scroll-mt-24 animate-in fade-in slide-in-from-bottom-2 duration-700"
             style={{ animationDelay: `${index * 80}ms` }}
           >
             <p className="text-[11px] tracking-[0.2em] text-muted-foreground uppercase">
@@ -29,24 +28,44 @@ export default function NossaHistoriaPage() {
             <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
               {block.body}
             </p>
-            <div className="mt-8 aspect-[16/10] overflow-hidden bg-muted/60">
-              {block.imageSrc ? (
-                // eslint-disable-next-line @next/next/no-img-element
+            {block.imageSrc ? (
+              <div className="mt-8 overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={block.imageSrc}
                   alt={block.imageAlt ?? block.title}
-                  className="h-full w-full object-cover"
+                  className="aspect-[4/5] w-full object-cover sm:aspect-[16/10]"
                 />
-              ) : (
-                <div className="flex h-full items-center justify-center px-6 text-center text-sm text-muted-foreground">
-                  Espaço para foto — adicione em{" "}
-                  <code className="mx-1">src/content/story.ts</code>
-                </div>
-              )}
-            </div>
+              </div>
+            ) : null}
           </article>
         ))}
       </div>
+
+      {story.gallery && story.gallery.length > 0 ? (
+        <section className="border-t border-border/60 bg-muted/30">
+          <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 sm:py-20">
+            <h2 className="text-center font-heading text-3xl text-foreground sm:text-4xl">
+              Mais momentos
+            </h2>
+            <p className="mx-auto mt-3 max-w-lg text-center text-muted-foreground">
+              Alguns recortes do caminho — carnaval, jantares, alianças e a família de quatro patas.
+            </p>
+            <div className="mt-10 columns-1 gap-3 sm:columns-2 sm:gap-4 lg:columns-3">
+              {story.gallery.map((item) => (
+                <figure key={item.src} className="mb-3 break-inside-avoid sm:mb-4">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    className="w-full object-cover"
+                  />
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
     </div>
   )
 }

@@ -32,6 +32,9 @@ yarn-error.log*
 .env*.local
 .env
 
+# local photo originals (site uses public/photos)
+/fotos
+
 # vercel
 .vercel
 

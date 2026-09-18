@@ -35,4 +35,6 @@ export const event: EventContent = {
   },
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://cha-de-panela.vercel.app",
   ogImage: "/og.png",
+  heroImageSrc: "/photos/hero.jpg",
+  heroImageAlt: "Carol e João celebrando o pedido de casamento",
 }

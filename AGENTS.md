@@ -17,7 +17,8 @@ Branch de trabalho: `main`
 - **RSVP / confirmar presença:** form no site → Formspree
 - Lista de presentes: placeholders inventados; casal define conteúdo real depois
 - Nomes reais: `Carol & João` (em `src/content/event.ts`)
-- Data/local/fotos reais: ainda placeholders em `src/content/`
+- Fotos do casal: em `public/photos/` (originais locais em `/fotos`, ignorado no git)
+- Data/local/PIX reais: ainda placeholders em `src/content/`
 
 ## Abas / rotas
 | Rota | Aba |

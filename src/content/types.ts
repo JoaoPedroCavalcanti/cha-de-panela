@@ -29,6 +29,8 @@ export type EventContent = {
   }
   siteUrl: string
   ogImage: string
+  heroImageSrc: string
+  heroImageAlt: string
 }
 
 export type StoryBlock = {
@@ -39,9 +41,15 @@ export type StoryBlock = {
   imageAlt?: string
 }
 
+export type StoryGalleryItem = {
+  src: string
+  alt: string
+}
+
 export type StoryContent = {
   intro: string
   blocks: StoryBlock[]
+  gallery?: StoryGalleryItem[]
 }
 
 export type GiftItem = {

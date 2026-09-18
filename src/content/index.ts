@@ -7,6 +7,7 @@ export type {
   NavItem,
   EventContent,
   StoryBlock,
+  StoryGalleryItem,
   StoryContent,
   GiftItem,
   SiteCopy,
