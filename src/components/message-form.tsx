@@ -93,16 +93,6 @@ export function MessageForm() {
         />
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="contact">Contato (opcional)</Label>
-        <Input
-          id="contact"
-          name="contact"
-          autoComplete="email"
-          placeholder="E-mail ou WhatsApp"
-        />
-      </div>
-
       {status === "error" && errorMessage ? (
         <p className="text-sm text-destructive" role="alert">
           {errorMessage}
