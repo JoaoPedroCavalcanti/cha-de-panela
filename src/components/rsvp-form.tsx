@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 type FormStatus = "idle" | "loading" | "success" | "error"
 
@@ -152,25 +151,33 @@ export function RsvpForm() {
 
       <fieldset className="space-y-3">
         <legend className="text-sm font-medium">Você irá ao evento?</legend>
-        <RadioGroup
-          value={attending}
-          onValueChange={(value) => {
-            if (value === "sim" || value === "nao") {
-              setAttending(value)
-              if (value === "nao") resetCompanions()
-            }
-          }}
-          className="flex flex-col gap-3 sm:flex-row sm:gap-6"
-        >
-          <label className="flex items-center gap-2 text-sm">
-            <RadioGroupItem value="sim" />
+        <div className="flex flex-col gap-3 sm:flex-row sm:gap-8">
+          <label className="relative z-0 flex cursor-pointer items-center gap-2.5 text-sm">
+            <input
+              type="radio"
+              name="attending"
+              value="sim"
+              checked={attending === "sim"}
+              onChange={() => setAttending("sim")}
+              className="size-4 shrink-0 accent-foreground"
+            />
             Sim, estarei lá
           </label>
-          <label className="flex items-center gap-2 text-sm">
-            <RadioGroupItem value="nao" />
+          <label className="relative z-0 flex cursor-pointer items-center gap-2.5 text-sm">
+            <input
+              type="radio"
+              name="attending"
+              value="nao"
+              checked={attending === "nao"}
+              onChange={() => {
+                setAttending("nao")
+                resetCompanions()
+              }}
+              className="size-4 shrink-0 accent-foreground"
+            />
             Infelizmente não poderei
           </label>
-        </RadioGroup>
+        </div>
       </fieldset>
 
       {attending === "sim" ? (
