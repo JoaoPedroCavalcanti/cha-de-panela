@@ -55,7 +55,7 @@ export function SiteHeader() {
           </summary>
 
           <nav
-            className="fixed inset-x-0 top-16 z-[100] max-h-[calc(100svh-4rem)] overflow-y-auto border-b border-border/60 bg-background px-4 py-3 shadow-sm"
+            className="fixed inset-x-0 top-16 z-[100] hidden max-h-[calc(100svh-4rem)] overflow-y-auto border-b border-border/60 bg-background px-4 py-3 shadow-sm group-open:block"
             aria-label="Menu mobile"
           >
             <ul className="flex flex-col">

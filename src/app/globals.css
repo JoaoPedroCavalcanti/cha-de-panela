@@ -105,7 +105,13 @@
   }
 }
 
-/* CSS-only photo lightbox (:target) — works without JS on mobile */
+@layer base {
+  /* Safari/WebKit: fixed descendants inside closed <details> can still intercept taps */
+  details:not([open]) > :not(summary) {
+    display: none !important;
+    pointer-events: none !important;
+  }
+}
 @layer components {
   .photo-lb-close-anchor {
     position: absolute;

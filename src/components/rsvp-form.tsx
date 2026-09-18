@@ -228,17 +228,13 @@ export function RsvpForm() {
         <button
           type="button"
           className={cn(
-            buttonVariants({ variant: "outline", size: "sm" }),
-            "touch-manipulation"
+            "inline-flex h-9 touch-manipulation items-center justify-center gap-1.5 rounded-lg border border-border bg-background px-3 text-sm font-medium",
+            "hover:bg-muted disabled:pointer-events-none disabled:opacity-50"
           )}
-          onClick={(e) => {
-            e.preventDefault()
-            e.stopPropagation()
-            addCompanion()
-          }}
+          onClick={() => addCompanion()}
           disabled={!companionsEnabled}
         >
-          <PlusIcon className="size-4" />
+          <PlusIcon className="size-4" aria-hidden />
           Adicionar acompanhante
         </button>
       </div>
