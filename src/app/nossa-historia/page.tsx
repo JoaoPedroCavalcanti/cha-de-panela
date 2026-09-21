@@ -26,12 +26,9 @@ export default function NossaHistoriaPage() {
           <article
             key={block.id}
             className="scroll-mt-24 animate-in fade-in slide-in-from-bottom-2 duration-700"
-            style={{ animationDelay: `${index * 80}ms` }}
+            style={{ animationDelay: `${Math.min(index, 6) * 60}ms` }}
           >
-            <p className="text-[11px] tracking-[0.2em] text-muted-foreground uppercase">
-              {String(index + 1).padStart(2, "0")}
-            </p>
-            <h2 className="mt-3 font-heading text-3xl text-foreground sm:text-4xl">
+            <h2 className="font-heading text-3xl text-foreground sm:text-4xl">
               {block.title}
             </h2>
             <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">

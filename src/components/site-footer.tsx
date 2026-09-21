@@ -8,9 +8,6 @@ export function SiteFooter() {
         <p className="text-sm text-muted-foreground">
           {event.eventTitle} · {event.dateLabel}
         </p>
-        <p className="text-xs text-muted-foreground/80">
-          Feito com carinho para celebrar o começo da nossa casa.
-        </p>
       </div>
     </footer>
   )

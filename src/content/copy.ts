@@ -4,7 +4,7 @@ export const copy: SiteCopy = {
   home: {
     ctaGifts: "Ver presentes",
     ctaRsvp: "Confirmar presença",
-    supporting: "Venha celebrar conosco o começo da nossa casa.",
+    supporting: "Venha celebrar conosco o começo do nosso sonho.",
   },
   gifts: {
     title: "Lista de presentes",
