@@ -21,7 +21,7 @@ export type EventContent = {
     pixKey: string
     pixKeyLabel: string
     pixQrImageSrc: string | null
-    picPayDefaultUrl: string
+    cardPaymentUrl: string
   }
   formspree: {
     messagesFormId: string
@@ -55,10 +55,10 @@ export type StoryContent = {
 export type GiftItem = {
   id: string
   name: string
-  description: string
+  description?: string
   amountBRL: number
   imageSrc?: string
-  picPayUrl?: string
+  cardPaymentUrl?: string
 }
 
 export type SiteCopy = {

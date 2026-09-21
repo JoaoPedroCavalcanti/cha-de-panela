@@ -130,17 +130,6 @@ export function RsvpForm() {
         <Input id="name" name="name" required autoComplete="name" placeholder="Seu nome" />
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="phone">Telefone / WhatsApp</Label>
-        <Input
-          id="phone"
-          name="phone"
-          required
-          autoComplete="tel"
-          placeholder="(84) 99999-9999"
-        />
-      </div>
-
       <fieldset className="space-y-3">
         <legend className="text-sm font-medium">Você irá ao evento?</legend>
         <div className="flex flex-col gap-3 sm:flex-row sm:gap-8">

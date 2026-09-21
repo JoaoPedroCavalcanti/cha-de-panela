@@ -26,7 +26,7 @@ export function PaymentSheet({ gift, open, onOpenChange }: PaymentSheetProps) {
   const [copied, setCopied] = useState(false)
   const [thankYou, setThankYou] = useState(false)
 
-  const picPayUrl = gift?.picPayUrl || event.payment.picPayDefaultUrl
+  const cardPaymentUrl = gift?.cardPaymentUrl || event.payment.cardPaymentUrl
 
   async function copyPix() {
     try {
@@ -53,10 +53,28 @@ export function PaymentSheet({ gift, open, onOpenChange }: PaymentSheetProps) {
         {gift ? (
           <>
             <SheetHeader className="text-left">
-              <SheetTitle className="font-heading text-2xl">{gift.name}</SheetTitle>
-              <SheetDescription className="text-base leading-relaxed">
-                {gift.description}
-              </SheetDescription>
+              <div className="flex items-center gap-4">
+                {gift.imageSrc ? (
+                  <div className="flex size-28 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-muted/40 p-2.5 sm:size-32">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={gift.imageSrc}
+                      alt={gift.name}
+                      className="max-h-full max-w-full object-contain"
+                    />
+                  </div>
+                ) : null}
+                <div className="min-w-0 flex-1">
+                  <SheetTitle className="font-heading text-xl leading-snug sm:text-2xl">
+                    {gift.name}
+                  </SheetTitle>
+                  {gift.description ? (
+                    <SheetDescription className="mt-2 text-base leading-relaxed">
+                      {gift.description}
+                    </SheetDescription>
+                  ) : null}
+                </div>
+              </div>
             </SheetHeader>
 
             <div className="mt-6 space-y-6 px-4 pb-8">
@@ -106,13 +124,13 @@ export function PaymentSheet({ gift, open, onOpenChange }: PaymentSheetProps) {
                   Ou pagar com cartão
                 </h3>
                 <a
-                  href={picPayUrl}
+                  href={cardPaymentUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setThankYou(true)}
                   className={cn(buttonVariants({ size: "lg" }), "w-full")}
                 >
-                  Abrir PicPay
+                  Pagar com cartão de crédito
                   <ExternalLinkIcon />
                 </a>
               </div>

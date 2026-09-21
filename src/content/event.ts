@@ -10,11 +10,11 @@ export const event: EventContent = {
   partnerTwo: "João",
   eventTitle: "Chá de Panela",
   tagline: "Venha celebrar conosco o começo da nossa casa.",
-  dateLabel: "Sábado, 15 de novembro de 2025",
-  dateISO: "2025-11-15",
+  dateLabel: "Sábado, 17 de novembro de 2026",
+  dateISO: "2026-11-17",
   timeLabel: "15h00",
   venueName: "Casa da Família — salão dos fundos",
-  venueAddress: "Rua das Flores, 123 — Bairro Jardim, São Paulo, SP",
+  venueAddress: "Rua das Flores, 123 — Bairro Jardim, Natal, RN",
   mapUrl: "https://maps.google.com/?q=São+Paulo",
   dressCode: "Esporte fino, cores claras e alegres",
   notes: [
@@ -23,10 +23,10 @@ export const event: EventContent = {
     "Crianças são bem-vindas — avise na confirmação se vierem com vocês.",
   ],
   payment: {
-    pixKey: "00000000000",
-    pixKeyLabel: "CPF (placeholder — trocar pela chave real)",
+    pixKey: "70300571470",
+    pixKeyLabel: "CPF",
     pixQrImageSrc: null,
-    picPayDefaultUrl: "https://picpay.me/",
+    cardPaymentUrl: "https://www.asaas.com/c/6q5ks9koceclygn5",
   },
   formspree: {
     // Set real IDs in .env.local — see README
