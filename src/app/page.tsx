@@ -13,7 +13,7 @@ export default function HomePage() {
         <img
           src={event.heroImageSrc}
           alt={event.heroImageAlt}
-          className="absolute inset-0 h-full w-full object-cover object-[center_28%] animate-in fade-in duration-1000"
+          className="absolute inset-0 h-full w-full object-cover object-center animate-in fade-in duration-1000"
         />
         <div
           aria-hidden

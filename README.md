@@ -1,6 +1,6 @@
 # Chá de Panela
 
-Site estático do chá de panela — Next.js (App Router), TypeScript, Tailwind e shadcn/ui. Sem backend próprio: formulários via Formspree; presentes com PIX (copiar/QR) + link PicPay. Pronto para deploy na Vercel.
+Site estático do chá de panela — Next.js (App Router), TypeScript, Tailwind e shadcn/ui. Sem backend próprio: formulários via Formspree; presentes com PIX (copiar/QR) + link de cartão (Asaas). Pronto para deploy na Vercel.
 
 ## Rotas
 
@@ -13,14 +13,27 @@ Site estático do chá de panela — Next.js (App Router), TypeScript, Tailwind 
 | `/presentes` | Lista de contribuições |
 | `/confirmar-presenca` | RSVP |
 
-## Como rodar
+## Como rodar (local)
 
 ```bash
 npm install
-npm run dev -- --port 43127
+npm run dev -- --port 43127 --hostname 127.0.0.1
 ```
 
-Abra [http://127.0.0.1:43127](http://127.0.0.1:43127).
+No seu PC: [http://127.0.0.1:43127](http://127.0.0.1:43127).
+
+### Compartilhar com outras pessoas (Cloudflare Tunnel)
+
+Enquanto o `npm run dev` estiver rodando, abra **outro terminal** na pasta do projeto e rode:
+
+```bash
+npx --yes cloudflared tunnel --url http://127.0.0.1:43127
+```
+
+O Cloudflared imprime uma URL pública tipo `https://….trycloudflare.com` — mande esse link.  
+Quem abrir acessa o site no seu computador (não precisa deploy). O link muda a cada vez que você reinicia o túnel; o `npm run dev` precisa continuar aberto.
+
+Para build de produção local:
 
 ```bash
 npm run build
@@ -31,7 +44,7 @@ npm start -- --port 43127
 
 Todo o texto/config fica em `src/content/`:
 
-- `event.ts` — nomes, data, local, PIX, PicPay, Formspree IDs, URL do site
+- `event.ts` — nomes, data, local, PIX, link de cartão, Formspree IDs, URL do site
 - `story.ts` — blocos da história + fotos
 - `gifts.ts` — lista de presentes (itens **não somem** após contribuição)
 - `nav.ts` — abas do menu
@@ -65,7 +78,7 @@ Campos enviados:
 
 - Clique em um item abre o **PaymentSheet** (sheet inferior).
 - PIX: copia a chave de `event.payment.pixKey`; QR opcional via `pixQrImageSrc`.
-- Cartão: abre `picPayUrl` do item ou `event.payment.picPayDefaultUrl`.
+- Cartão: abre `cardPaymentUrl` do item ou `event.payment.cardPaymentUrl`.
 - Itens permanecem na lista — é guia de contribuição, não estoque.
 
 ## Deploy na Vercel
@@ -80,7 +93,7 @@ Campos enviados:
 - Next.js App Router + TypeScript
 - Tailwind CSS v4 + shadcn/ui
 - Formspree (somente no cliente)
-- Sem banco, auth, Asaas ou API própria
+- Sem banco, auth ou API própria de gateway
 
 ## Licença
 

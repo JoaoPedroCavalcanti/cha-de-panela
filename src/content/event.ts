@@ -25,7 +25,7 @@ export const event: EventContent = {
   payment: {
     pixKey: "70300571470",
     pixKeyLabel: "CPF",
-    pixQrImageSrc: null,
+    pixQrImageSrc: "/photos/pix-qrcode.png",
     cardPaymentUrl: "https://www.asaas.com/c/6q5ks9koceclygn5",
   },
   formspree: {
