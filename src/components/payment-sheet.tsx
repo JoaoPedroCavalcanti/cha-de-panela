@@ -86,7 +86,7 @@ export function PaymentSheet({ gift, open, onOpenChange }: PaymentSheetProps) {
                   {formatBRL(gift.amountBRL)}
                 </p>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Contribuição livre — use o valor como referência.
+                  Contribuição livre. Use o valor como referência.
                 </p>
               </div>
 
