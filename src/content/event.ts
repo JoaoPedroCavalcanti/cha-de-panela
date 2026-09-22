@@ -34,7 +34,7 @@ export const event: EventContent = {
     rsvpFormId: process.env.NEXT_PUBLIC_FORMSPREE_RSVP_ID ?? "",
   },
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://cha-de-panela.vercel.app",
-  ogImage: "/og.png",
+  ogImage: "/og.jpg",
   heroImageSrc: "/photos/hero.jpg",
   heroImageAlt: "Carol e João mostrando as alianças",
 }
