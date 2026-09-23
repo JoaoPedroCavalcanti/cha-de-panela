@@ -2,49 +2,54 @@
 
 import { useState, type FormEvent } from "react"
 
-import { event } from "@/content/event"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { getApiBaseUrl } from "@/lib/api"
 
 type FormStatus = "idle" | "loading" | "success" | "error"
-
-function resolveEndpoint(formId: string) {
-  if (!formId) return null
-  return `https://formspree.io/f/${formId}`
-}
 
 export function MessageForm() {
   const [status, setStatus] = useState<FormStatus>("idle")
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  const endpoint = resolveEndpoint(event.formspree.messagesFormId)
-
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setErrorMessage(null)
 
-    if (!endpoint) {
+    const form = e.currentTarget
+    const data = new FormData(form)
+    const name = String(data.get("name") ?? "").trim()
+    const message = String(data.get("message") ?? "").trim()
+
+    if (!name) {
       setStatus("error")
-      setErrorMessage(
-        "Formspree ainda não configurado. Defina NEXT_PUBLIC_FORMSPREE_MESSAGES_ID no .env.local."
-      )
+      setErrorMessage("Informe seu nome.")
+      return
+    }
+    if (!message) {
+      setStatus("error")
+      setErrorMessage("Escreva uma mensagem.")
       return
     }
 
-    const form = e.currentTarget
-    const data = new FormData(form)
-    data.set("formType", "mensagem")
-
     setStatus("loading")
     try {
-      const res = await fetch(endpoint, {
+      const res = await fetch(`${getApiBaseUrl()}/api/messages/`, {
         method: "POST",
-        body: data,
-        headers: { Accept: "application/json" },
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, message }),
       })
-      if (!res.ok) throw new Error("Falha ao enviar")
+
+      if (!res.ok) {
+        const detail = await res.text()
+        throw new Error(detail || "Falha ao enviar")
+      }
+
       setStatus("success")
       form.reset()
     } catch {

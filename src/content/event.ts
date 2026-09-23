@@ -2,7 +2,7 @@ import type { EventContent } from "./types"
 
 /**
  * Replace placeholders with real couple details before launch.
- * RSVP goes to NEXT_PUBLIC_API_URL. Messages still use Formspree.
+ * RSVP and messages go to NEXT_PUBLIC_API_URL.
  */
 export const event: EventContent = {
   coupleNames: "Carol & João",
@@ -27,10 +27,6 @@ export const event: EventContent = {
     pixKeyLabel: "CPF",
     pixQrImageSrc: "/photos/pix-qrcode.png",
     cardPaymentUrl: "https://www.asaas.com/c/6q5ks9koceclygn5",
-  },
-  formspree: {
-    // Mensagens ainda no Formspree — set in .env.local
-    messagesFormId: process.env.NEXT_PUBLIC_FORMSPREE_MESSAGES_ID ?? "",
   },
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://cha-de-panela.vercel.app",
   ogImage: "/og.jpg",

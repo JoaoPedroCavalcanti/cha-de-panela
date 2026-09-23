@@ -12,7 +12,7 @@ Branch de trabalho: `main`
 - Front Next.js na Vercel; API Django Ninja + Postgres (`cha-de-panela-api`)
 - **Presentes = contribuição** com valor sugerido; itens **nunca somem** (não é estoque/reserva) — até backend de gifts
 - **Pagamento:** PIX (chave/QR + valor só como texto de referência) + cartão via link Asaas
-- **Mensagens aos noivos:** privadas — form → Formspree, **sem mural público**
+- **Mensagens aos noivos:** privadas — form → `POST {NEXT_PUBLIC_API_URL}/api/messages/` (admin), **sem mural público**
 - **RSVP / confirmar presença:** form → `POST {NEXT_PUBLIC_API_URL}/api/rsvp/`
 - Lista de presentes: placeholders inventados; casal define conteúdo real depois
 - Nomes reais: `Carol & João` (em `src/content/event.ts`)
@@ -33,7 +33,7 @@ Branch de trabalho: `main`
 ## Stack
 - Next.js App Router + TypeScript + Tailwind + shadcn/ui
 - Conteúdo em `src/content/` (`event.ts`, `story.ts`, `gifts.ts`, `nav.ts`, `copy.ts`)
-- Env: `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_FORMSPREE_MESSAGES_ID`, `NEXT_PUBLIC_SITE_URL`
+- Env: `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_SITE_URL`
 - Ver `.env.example` e `README.md`
 
 ## Fluxo de presentes
@@ -56,22 +56,23 @@ Mobile-first. Evitar visual genérico “AI purple/cream”.
 ## O que já está pronto
 - Scaffold Next + páginas das 5 abas + home
 - PaymentSheet (PIX/PicPay)
-- Forms Mensagens + RSVP (estados UI + Formspree)
+- Forms Mensagens + RSVP → API Django (`cha-de-panela-api`)
 - README, OG image, conteúdo placeholder
 - Código na `main` do GitHub
 
 ## Próximo (prioridade)
 1. **Design-pass** com as refs acima (tipografia, cores, hero full-bleed, fotos, motion sutil)
 2. Conteúdo real (nomes, data, local, PIX, lista de presentes, fotos)
-3. Configurar Formspree + env
-4. Deploy Vercel
+3. CRUD de presentes no backend
+4. Deploy Vercel + API hospedada
 5. Opcional: `package-lock.json` / favicon se faltarem no clone (`npm install` regenera lock)
 
 ## Fora de escopo
-- Backend/API própria, Supabase, mural público de mensagens
+- Mural público de mensagens
 - Asaas / PIX dinâmico por API
-- Reserva/estoque de presentes / contador “já compraram”
+- Reserva/estoque de presentes / contador “já compraram” (até haver demanda)
 - Hospedar no PC do casal
+- Upload de mídia no Django (fotos ficam no `public/` do Next)
 
 ## Como trabalhar neste repo (preferência do dono)
 - Editar no **clone local** do usuário; commit + push

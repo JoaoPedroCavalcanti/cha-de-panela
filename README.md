@@ -1,6 +1,6 @@
 # Chá de Panela
 
-Site estático do chá de panela — Next.js (App Router), TypeScript, Tailwind e shadcn/ui. Sem backend próprio: formulários via Formspree; presentes com PIX (copiar/QR) + link de cartão (Asaas). Pronto para deploy na Vercel.
+Site do chá de panela — Next.js (App Router), TypeScript, Tailwind e shadcn/ui. RSVP e mensagens via API Django (`cha-de-panela-api`); presentes com PIX (copiar/QR) + link de cartão (Asaas). Front na Vercel.
 
 ## Rotas
 
@@ -44,7 +44,7 @@ npm start -- --port 43127
 
 Todo o texto/config fica em `src/content/`:
 
-- `event.ts` — nomes, data, local, PIX, link de cartão, Formspree IDs, URL do site
+- `event.ts` — nomes, data, local, PIX, link de cartão, URL do site
 - `story.ts` — blocos da história + fotos
 - `gifts.ts` — lista de presentes (itens **não somem** após contribuição)
 - `nav.ts` — abas do menu
@@ -66,15 +66,11 @@ No front, `.env.local`:
 
 ```bash
 NEXT_PUBLIC_API_URL=http://127.0.0.1:8088
-NEXT_PUBLIC_FORMSPREE_MESSAGES_ID=xxxxxxxx   # só mensagens
 NEXT_PUBLIC_SITE_URL=http://127.0.0.1:3001
 ```
 
-RSVP: `POST /api/rsvp/` com `{ name, attending, notes, companions: [{ name }] }`.
-
-## Formspree (mensagens)
-
-Ainda usado só em `/mensagens`. Crie um form no [formspree.io](https://formspree.io) e coloque o ID em `NEXT_PUBLIC_FORMSPREE_MESSAGES_ID`.
+- RSVP: `POST /api/rsvp/` — `{ name, attending, notes, companions: [{ name }] }`
+- Mensagens: `POST /api/messages/` — `{ name, message }` (lidas no `/admin` da API)
 
 ## Presentes e pagamento
 
@@ -87,15 +83,14 @@ Ainda usado só em `/mensagens`. Crie um form no [formspree.io](https://formspre
 
 1. Importe o repositório na [Vercel](https://vercel.com).
 2. Framework: Next.js (detectado automaticamente).
-3. Adicione as env vars `NEXT_PUBLIC_*` no projeto.
+3. Adicione `NEXT_PUBLIC_API_URL` (URL pública da API) e `NEXT_PUBLIC_SITE_URL`.
 4. Deploy. Domínio customizado é opcional no plano free.
 
 ## Stack
 
 - Next.js App Router + TypeScript
 - Tailwind CSS v4 + shadcn/ui
-- Formspree (mensagens)
-- RSVP via API Django (`NEXT_PUBLIC_API_URL`)
+- RSVP e mensagens via API Django (`NEXT_PUBLIC_API_URL`)
 
 ## Licença
 

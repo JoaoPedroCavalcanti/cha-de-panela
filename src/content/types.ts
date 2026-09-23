@@ -23,9 +23,6 @@ export type EventContent = {
     pixQrImageSrc: string | null
     cardPaymentUrl: string
   }
-  formspree: {
-    messagesFormId: string
-  }
   siteUrl: string
   ogImage: string
   heroImageSrc: string
