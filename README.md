@@ -1,6 +1,6 @@
 # Chá de Panela
 
-Site do chá de panela — Next.js (App Router), TypeScript, Tailwind e shadcn/ui. RSVP e mensagens via API Django (`cha-de-panela-api`); presentes com PIX (copiar/QR) + link de cartão (Asaas). Front na Vercel.
+Site do chá de panela — Next.js (App Router), TypeScript, Tailwind e shadcn/ui. RSVP, mensagens e presentes via API Django (`cha-de-panela-api`); pagamento PIX + link Asaas. Front na Vercel.
 
 ## Rotas
 
@@ -46,13 +46,14 @@ Todo o texto/config fica em `src/content/`:
 
 - `event.ts` — nomes, data, local, PIX, link de cartão, URL do site
 - `story.ts` — blocos da história + fotos
-- `gifts.ts` — lista de presentes (itens **não somem** após contribuição)
 - `nav.ts` — abas do menu
 - `copy.ts` — textos de UI das páginas
 
-Troque placeholders (data, local, chave PIX, etc.) antes do lançamento. Fotos: coloque arquivos em `public/` e referencie os caminhos nos content files.
+Presentes vêm da API (`GET /api/gifts/`), não de arquivo estático.
 
-## API (RSVP)
+Troque placeholders (data, local, chave PIX, etc.) antes do lançamento. Fotos do casal: `public/photos/`.
+
+## API (RSVP, mensagens, presentes)
 
 Suba o backend (`cha-de-panela-api`):
 
@@ -60,6 +61,7 @@ Suba o backend (`cha-de-panela-api`):
 cd ../cha-de-panela-api
 cp .env.example .env
 docker compose up --build
+docker compose exec api python manage.py seed_gifts
 ```
 
 No front, `.env.local`:
@@ -70,14 +72,16 @@ NEXT_PUBLIC_SITE_URL=http://127.0.0.1:3001
 ```
 
 - RSVP: `POST /api/rsvp/` — `{ name, attending, notes, companions: [{ name }] }`
-- Mensagens: `POST /api/messages/` — `{ name, message }` (lidas no `/admin` da API)
+- Mensagens: `POST /api/messages/` — `{ name, message }` (lidas no `/admin`)
+- Presentes: `GET /api/gifts/?q=&page=&page_size=&sort=` (CRUD + fotos no `/admin`)
 
 ## Presentes e pagamento
 
-- Clique em um item abre o **PaymentSheet** (sheet inferior).
-- PIX: copia a chave de `event.payment.pixKey`; QR opcional via `pixQrImageSrc`.
-- Cartão: abre `cardPaymentUrl` do item ou `event.payment.cardPaymentUrl`.
-- Itens permanecem na lista — é guia de contribuição, não estoque.
+- Lista, busca, ordenação e paginação vêm do backend.
+- Clique em um item abre o **PaymentSheet**.
+- PIX: chave em `event.payment.pixKey`; QR opcional via `pixQrImageSrc`.
+- Cartão: `cardPaymentUrl` do item ou `event.payment.cardPaymentUrl`.
+- Itens não somem após contribuição — é guia, não estoque.
 
 ## Deploy na Vercel
 
@@ -90,7 +94,7 @@ NEXT_PUBLIC_SITE_URL=http://127.0.0.1:3001
 
 - Next.js App Router + TypeScript
 - Tailwind CSS v4 + shadcn/ui
-- RSVP e mensagens via API Django (`NEXT_PUBLIC_API_URL`)
+- RSVP, mensagens e presentes via API Django (`NEXT_PUBLIC_API_URL`)
 
 ## Licença
 

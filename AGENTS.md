@@ -10,7 +10,7 @@ Branch de trabalho: `main`
 
 ## Decisões fechadas
 - Front Next.js na Vercel; API Django Ninja + Postgres (`cha-de-panela-api`)
-- **Presentes = contribuição** com valor sugerido; itens **nunca somem** (não é estoque/reserva) — até backend de gifts
+- **Presentes:** lista/busca/ordenação/paginação → `GET {NEXT_PUBLIC_API_URL}/api/gifts/`; CRUD + imagens no admin da API (`media/` volume)
 - **Pagamento:** PIX (chave/QR + valor só como texto de referência) + cartão via link Asaas
 - **Mensagens aos noivos:** privadas — form → `POST {NEXT_PUBLIC_API_URL}/api/messages/` (admin), **sem mural público**
 - **RSVP / confirmar presença:** form → `POST {NEXT_PUBLIC_API_URL}/api/rsvp/`
@@ -32,7 +32,7 @@ Branch de trabalho: `main`
 
 ## Stack
 - Next.js App Router + TypeScript + Tailwind + shadcn/ui
-- Conteúdo em `src/content/` (`event.ts`, `story.ts`, `gifts.ts`, `nav.ts`, `copy.ts`)
+- Conteúdo em `src/content/` (`event.ts`, `story.ts`, `nav.ts`, `copy.ts`); presentes via API
 - Env: `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_SITE_URL`
 - Ver `.env.example` e `README.md`
 
@@ -63,8 +63,8 @@ Mobile-first. Evitar visual genérico “AI purple/cream”.
 ## Próximo (prioridade)
 1. **Design-pass** com as refs acima (tipografia, cores, hero full-bleed, fotos, motion sutil)
 2. Conteúdo real (nomes, data, local, PIX, lista de presentes, fotos)
-3. CRUD de presentes no backend
-4. Deploy Vercel + API hospedada
+3. CRUD de presentes no backend — feito (`/api/gifts/` + admin + seed)
+4. Deploy Vercel + API hospedada (com volume persistente em `media/`)
 5. Opcional: `package-lock.json` / favicon se faltarem no clone (`npm install` regenera lock)
 
 ## Fora de escopo
@@ -72,7 +72,7 @@ Mobile-first. Evitar visual genérico “AI purple/cream”.
 - Asaas / PIX dinâmico por API
 - Reserva/estoque de presentes / contador “já compraram” (até haver demanda)
 - Hospedar no PC do casal
-- Upload de mídia no Django (fotos ficam no `public/` do Next)
+- MinIO/S3 (usar `media/` + volume enquanto a API tiver disco persistente)
 
 ## Como trabalhar neste repo (preferência do dono)
 - Editar no **clone local** do usuário; commit + push

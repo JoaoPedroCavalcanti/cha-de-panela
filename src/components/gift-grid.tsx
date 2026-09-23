@@ -1,51 +1,73 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-import type { GiftItem } from "@/content/types"
 import { copy } from "@/content/copy"
-import { formatBRL } from "@/lib/format"
-import { Button } from "@/components/ui/button"
+import type { GiftItem } from "@/content/types"
 import { PaymentSheet } from "@/components/payment-sheet"
+import { Button } from "@/components/ui/button"
+import { fetchGifts, type GiftSortKey } from "@/lib/gifts-api"
+import { formatBRL } from "@/lib/format"
 
-type SortKey = "price-desc" | "price-asc" | "name-asc"
-
-type GiftGridProps = {
-  items: GiftItem[]
-}
-
-const sortOptions: { value: SortKey; label: string }[] = [
+const sortOptions: { value: GiftSortKey; label: string }[] = [
   { value: "price-desc", label: "Maior preço" },
   { value: "price-asc", label: "Menor preço" },
   { value: "name-asc", label: "Nome A–Z" },
 ]
 
-function sortGifts(items: GiftItem[], sort: SortKey) {
-  const list = [...items]
-  switch (sort) {
-    case "price-asc":
-      return list.sort((a, b) => a.amountBRL - b.amountBRL)
-    case "price-desc":
-      return list.sort((a, b) => b.amountBRL - a.amountBRL)
-    case "name-asc":
-      return list.sort((a, b) => a.name.localeCompare(b.name, "pt-BR"))
-    default:
-      return list
-  }
-}
+const PAGE_SIZE = 12
 
-export function GiftGrid({ items }: GiftGridProps) {
+export function GiftGrid() {
   const [selected, setSelected] = useState<GiftItem | null>(null)
   const [open, setOpen] = useState(false)
-  const [sort, setSort] = useState<SortKey>("price-desc")
+  const [sort, setSort] = useState<GiftSortKey>("price-desc")
   const [query, setQuery] = useState("")
+  const [debouncedQuery, setDebouncedQuery] = useState("")
+  const [page, setPage] = useState(1)
+  const [items, setItems] = useState<GiftItem[]>([])
+  const [totalPages, setTotalPages] = useState(1)
+  const [count, setCount] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-  const filtered = sortGifts(
-    items.filter((gift) =>
-      gift.name.toLowerCase().includes(query.trim().toLowerCase())
-    ),
-    sort
-  )
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setDebouncedQuery(query)
+      setPage(1)
+    }, 300)
+    return () => window.clearTimeout(timer)
+  }, [query])
+
+  useEffect(() => {
+    let cancelled = false
+    setLoading(true)
+    setError(null)
+
+    fetchGifts({
+      q: debouncedQuery,
+      page,
+      pageSize: PAGE_SIZE,
+      sort,
+    })
+      .then((data) => {
+        if (cancelled) return
+        setItems(data.results)
+        setTotalPages(data.totalPages)
+        setCount(data.count)
+      })
+      .catch(() => {
+        if (cancelled) return
+        setError("Não foi possível carregar os presentes. Tente de novo.")
+        setItems([])
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [debouncedQuery, page, sort])
 
   function openGift(gift: GiftItem) {
     setSelected(gift)
@@ -70,7 +92,10 @@ export function GiftGrid({ items }: GiftGridProps) {
           <select
             id="gift-sort"
             value={sort}
-            onChange={(e) => setSort(e.target.value as SortKey)}
+            onChange={(e) => {
+              setSort(e.target.value as GiftSortKey)
+              setPage(1)
+            }}
             className="h-9 rounded-lg border border-input bg-transparent px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             {sortOptions.map((opt) => (
@@ -82,51 +107,91 @@ export function GiftGrid({ items }: GiftGridProps) {
         </div>
       </div>
 
-      {filtered.length === 0 ? (
-        <p className="py-10 text-center text-sm text-muted-foreground">
-          Nenhum presente encontrado para “{query.trim()}”.
+      {error ? (
+        <p className="py-10 text-center text-sm text-destructive" role="alert">
+          {error}
         </p>
       ) : null}
 
-      <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {filtered.map((gift) => (
-          <li
-            key={gift.id}
-            className="flex flex-col border-b border-border/70 pb-6 transition-opacity hover:opacity-95"
-          >
-            <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden bg-muted/40 p-4">
-              {gift.imageSrc ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={gift.imageSrc}
-                  alt={gift.name}
-                  className="max-h-full max-w-full object-contain"
-                />
-              ) : (
-                <span className="font-heading text-3xl text-muted-foreground/40">
-                  {gift.name.charAt(0)}
-                </span>
-              )}
-            </div>
-            <h2 className="font-heading text-xl text-foreground">{gift.name}</h2>
-            {gift.description ? (
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-                {gift.description}
+      {loading ? (
+        <p className="py-10 text-center text-sm text-muted-foreground">Carregando…</p>
+      ) : null}
+
+      {!loading && !error && items.length === 0 ? (
+        <p className="py-10 text-center text-sm text-muted-foreground">
+          {debouncedQuery.trim()
+            ? `Nenhum presente encontrado para “${debouncedQuery.trim()}”.`
+            : "Nenhum presente cadastrado ainda."}
+        </p>
+      ) : null}
+
+      {!loading && items.length > 0 ? (
+        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {items.map((gift) => (
+            <li
+              key={gift.id}
+              className="flex flex-col border-b border-border/70 pb-6 transition-opacity hover:opacity-95"
+            >
+              <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden bg-muted/40 p-4">
+                {gift.imageSrc ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={gift.imageSrc}
+                    alt={gift.name}
+                    className="max-h-full max-w-full object-contain"
+                  />
+                ) : (
+                  <span className="font-heading text-3xl text-muted-foreground/40">
+                    {gift.name.charAt(0)}
+                  </span>
+                )}
+              </div>
+              <h2 className="font-heading text-xl text-foreground">{gift.name}</h2>
+              {gift.description ? (
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  {gift.description}
+                </p>
+              ) : null}
+              <p className="mt-4 text-base font-medium text-foreground">
+                {formatBRL(gift.amountBRL)}
               </p>
-            ) : null}
-            <p className="mt-4 text-base font-medium text-foreground">
-              {formatBRL(gift.amountBRL)}
-            </p>
+              <Button
+                type="button"
+                className="mt-4 w-full"
+                onClick={() => openGift(gift)}
+              >
+                {copy.gifts.contributeCta}
+              </Button>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+
+      {!loading && count > 0 ? (
+        <div className="mt-10 flex flex-col items-center justify-between gap-3 sm:flex-row">
+          <p className="text-sm text-muted-foreground">
+            {count} presente{count === 1 ? "" : "s"} · página {page} de {totalPages}
+          </p>
+          <div className="flex gap-2">
             <Button
               type="button"
-              className="mt-4 w-full"
-              onClick={() => openGift(gift)}
+              variant="outline"
+              disabled={page <= 1}
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
             >
-              {copy.gifts.contributeCta}
+              Anterior
             </Button>
-          </li>
-        ))}
-      </ul>
+            <Button
+              type="button"
+              variant="outline"
+              disabled={page >= totalPages}
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            >
+              Próxima
+            </Button>
+          </div>
+        </div>
+      ) : null}
 
       <PaymentSheet gift={selected} open={open} onOpenChange={setOpen} />
     </>

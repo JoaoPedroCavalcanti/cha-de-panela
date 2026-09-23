@@ -49,12 +49,13 @@ export type StoryContent = {
 }
 
 export type GiftItem = {
-  id: string
+  id: number
+  slug: string
   name: string
   description?: string
   amountBRL: number
-  imageSrc?: string
-  cardPaymentUrl?: string
+  imageSrc?: string | null
+  cardPaymentUrl?: string | null
 }
 
 export type SiteCopy = {
