@@ -25,7 +25,6 @@ export type EventContent = {
   }
   formspree: {
     messagesFormId: string
-    rsvpFormId: string
   }
   siteUrl: string
   ogImage: string

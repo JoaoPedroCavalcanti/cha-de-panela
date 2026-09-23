@@ -9,12 +9,11 @@ Repo: https://github.com/JoaoPedroCavalcanti/cha-de-panela
 Branch de trabalho: `main`
 
 ## Decisões fechadas
-- **Estático**, sem backend próprio, sem banco, sem auth
-- **Hospedagem:** Vercel (free)
-- **Presentes = contribuição** com valor sugerido; itens **nunca somem** (não é estoque/reserva)
-- **Pagamento:** PIX (chave/QR + valor só como texto de referência) + cartão via link (PicPay). **Sem Asaas/API** de gateway
-- **Mensagens aos noivos:** privadas (só o casal recebe) — form → Formspree, **sem mural público**
-- **RSVP / confirmar presença:** form no site → Formspree
+- Front Next.js na Vercel; API Django Ninja + Postgres (`cha-de-panela-api`)
+- **Presentes = contribuição** com valor sugerido; itens **nunca somem** (não é estoque/reserva) — até backend de gifts
+- **Pagamento:** PIX (chave/QR + valor só como texto de referência) + cartão via link Asaas
+- **Mensagens aos noivos:** privadas — form → Formspree, **sem mural público**
+- **RSVP / confirmar presença:** form → `POST {NEXT_PUBLIC_API_URL}/api/rsvp/`
 - Lista de presentes: placeholders inventados; casal define conteúdo real depois
 - Nomes reais: `Carol & João` (em `src/content/event.ts`)
 - Fotos do casal: em `public/photos/` (originais locais em `/fotos`, ignorado no git)
@@ -34,7 +33,7 @@ Branch de trabalho: `main`
 ## Stack
 - Next.js App Router + TypeScript + Tailwind + shadcn/ui
 - Conteúdo em `src/content/` (`event.ts`, `story.ts`, `gifts.ts`, `nav.ts`, `copy.ts`)
-- Formspree via env: `NEXT_PUBLIC_FORMSPREE_MESSAGES_ID`, `NEXT_PUBLIC_FORMSPREE_RSVP_ID`, `NEXT_PUBLIC_SITE_URL`
+- Env: `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_FORMSPREE_MESSAGES_ID`, `NEXT_PUBLIC_SITE_URL`
 - Ver `.env.example` e `README.md`
 
 ## Fluxo de presentes

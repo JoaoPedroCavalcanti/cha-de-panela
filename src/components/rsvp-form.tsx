@@ -3,11 +3,11 @@
 import { useRef, useState, type FormEvent } from "react"
 import { PlusIcon, XIcon } from "lucide-react"
 
-import { event } from "@/content/event"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { getApiBaseUrl } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
 type FormStatus = "idle" | "loading" | "success" | "error"
@@ -17,11 +17,6 @@ type Companion = {
   name: string
 }
 
-function resolveEndpoint(formId: string) {
-  if (!formId) return null
-  return `https://formspree.io/f/${formId}`
-}
-
 export function RsvpForm() {
   const companionSeq = useRef(0)
   const [status, setStatus] = useState<FormStatus>("idle")
@@ -29,7 +24,6 @@ export function RsvpForm() {
   const [companions, setCompanions] = useState<Companion[]>([])
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  const endpoint = resolveEndpoint(event.formspree.rsvpFormId)
   const companionsEnabled = attending === "sim"
 
   function makeCompanion(): Companion {
@@ -58,40 +52,43 @@ export function RsvpForm() {
     e.preventDefault()
     setErrorMessage(null)
 
-    if (!endpoint) {
-      setStatus("error")
-      setErrorMessage(
-        "Formspree ainda não configurado. Defina NEXT_PUBLIC_FORMSPREE_RSVP_ID no .env.local."
-      )
-      return
-    }
-
     const form = e.currentTarget
     const data = new FormData(form)
-    data.set("formType", "rsvp")
-    data.set("attending", attending)
-
+    const name = String(data.get("name") ?? "").trim()
+    const notes = String(data.get("notes") ?? "").trim()
     const companionNames = companionsEnabled
       ? companions.map((c) => c.name.trim()).filter(Boolean)
       : []
 
-    data.set(
-      "companions",
-      companionNames.length > 0 ? companionNames.join(", ") : "Nenhum"
-    )
-    data.set("companionsCount", String(companionNames.length))
-    companionNames.forEach((name, index) => {
-      data.set(`companion_${index + 1}`, name)
-    })
+    if (!name) {
+      setStatus("error")
+      setErrorMessage("Informe seu nome completo.")
+      return
+    }
 
     setStatus("loading")
     try {
-      const res = await fetch(endpoint, {
+      const res = await fetch(`${getApiBaseUrl()}/api/rsvp/`, {
         method: "POST",
-        body: data,
-        headers: { Accept: "application/json" },
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          attending: attending === "sim",
+          notes,
+          companions: companionNames.map((companionName) => ({
+            name: companionName,
+          })),
+        }),
       })
-      if (!res.ok) throw new Error("Falha ao enviar")
+
+      if (!res.ok) {
+        const detail = await res.text()
+        throw new Error(detail || "Falha ao enviar")
+      }
+
       setStatus("success")
       form.reset()
       setAttending("sim")

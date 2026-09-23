@@ -52,27 +52,29 @@ Todo o texto/config fica em `src/content/`:
 
 Troque placeholders (data, local, chave PIX, etc.) antes do lançamento. Fotos: coloque arquivos em `public/` e referencie os caminhos nos content files.
 
-## Formspree (mensagens + RSVP)
+## API (RSVP)
 
-1. Crie uma conta em [formspree.io](https://formspree.io).
-2. Crie **dois** forms (ou um com campo `formType`):
-   - Mensagens aos noivos
-   - Confirmar presença
-3. Copie o ID de cada form (`https://formspree.io/f/<ID>`).
-4. Crie `.env.local` na raiz:
+Suba o backend (`cha-de-panela-api`):
 
 ```bash
-NEXT_PUBLIC_FORMSPREE_MESSAGES_ID=xxxxxxxx
-NEXT_PUBLIC_FORMSPREE_RSVP_ID=yyyyyyyy
-NEXT_PUBLIC_SITE_URL=https://seu-dominio.vercel.app
+cd ../cha-de-panela-api
+cp .env.example .env
+docker compose up --build
 ```
 
-5. Reinicie o `npm run dev`. Sem esses IDs, os forms mostram estado de erro com instrução clara (útil em desenvolvimento).
+No front, `.env.local`:
 
-Campos enviados:
+```bash
+NEXT_PUBLIC_API_URL=http://127.0.0.1:8088
+NEXT_PUBLIC_FORMSPREE_MESSAGES_ID=xxxxxxxx   # só mensagens
+NEXT_PUBLIC_SITE_URL=http://127.0.0.1:3001
+```
 
-- **Mensagens:** `name`, `message`, `contact?`, `formType=mensagem`
-- **RSVP:** `name`, `phone`, `email?`, `attending`, `guests`, `notes?`, `formType=rsvp`
+RSVP: `POST /api/rsvp/` com `{ name, attending, notes, companions: [{ name }] }`.
+
+## Formspree (mensagens)
+
+Ainda usado só em `/mensagens`. Crie um form no [formspree.io](https://formspree.io) e coloque o ID em `NEXT_PUBLIC_FORMSPREE_MESSAGES_ID`.
 
 ## Presentes e pagamento
 
@@ -92,8 +94,8 @@ Campos enviados:
 
 - Next.js App Router + TypeScript
 - Tailwind CSS v4 + shadcn/ui
-- Formspree (somente no cliente)
-- Sem banco, auth ou API própria de gateway
+- Formspree (mensagens)
+- RSVP via API Django (`NEXT_PUBLIC_API_URL`)
 
 ## Licença
 

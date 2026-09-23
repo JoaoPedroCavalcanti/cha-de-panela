@@ -2,7 +2,7 @@ import type { EventContent } from "./types"
 
 /**
  * Replace placeholders with real couple details before launch.
- * Formspree IDs can also be overridden via NEXT_PUBLIC_FORMSPREE_* env vars.
+ * RSVP goes to NEXT_PUBLIC_API_URL. Messages still use Formspree.
  */
 export const event: EventContent = {
   coupleNames: "Carol & João",
@@ -29,9 +29,8 @@ export const event: EventContent = {
     cardPaymentUrl: "https://www.asaas.com/c/6q5ks9koceclygn5",
   },
   formspree: {
-    // Set real IDs in .env.local — see README
+    // Mensagens ainda no Formspree — set in .env.local
     messagesFormId: process.env.NEXT_PUBLIC_FORMSPREE_MESSAGES_ID ?? "",
-    rsvpFormId: process.env.NEXT_PUBLIC_FORMSPREE_RSVP_ID ?? "",
   },
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://cha-de-panela.vercel.app",
   ogImage: "/og.jpg",

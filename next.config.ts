@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Cloudflare quick tunnels change hostname each restart; allow their JS/HMR in dev.
-  allowedDevOrigins: ["*.trycloudflare.com"],
+  // Dev HMR/assets: allow local hosts + Cloudflare quick tunnels.
+  allowedDevOrigins: ["127.0.0.1", "localhost", "*.trycloudflare.com"],
 };
 
 export default nextConfig;
