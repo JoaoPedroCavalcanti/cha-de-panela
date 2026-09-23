@@ -74,14 +74,14 @@ NEXT_PUBLIC_SITE_URL=http://127.0.0.1:3001
 - RSVP: `POST /api/rsvp/` — `{ name, attending, notes, companions: [{ name }] }`
 - Mensagens: `POST /api/messages/` — `{ name, message }` (lidas no `/admin`)
 - Presentes: `GET /api/gifts/?q=&page=&page_size=&sort=` (CRUD + fotos no `/admin`)
+- Checkout: `POST /api/gifts/{id}/checkout/` → redireciona ao Asaas (PIX ou cartão)
 
 ## Presentes e pagamento
 
 - Lista, busca, ordenação e paginação vêm do backend.
-- Clique em um item abre o **PaymentSheet**.
-- PIX: chave em `event.payment.pixKey`; QR opcional via `pixQrImageSrc`.
-- Cartão: `cardPaymentUrl` do item ou `event.payment.cardPaymentUrl`.
-- Itens não somem após contribuição — é guia, não estoque.
+- Clique em um item abre o sheet → botão cria checkout Asaas (PIX + cartão).
+- Após `CHECKOUT_PAID` no webhook, o presente fica `is_active=false` e some da lista.
+- Itens podem ser reativados no admin da API.
 
 ## Deploy na Vercel
 

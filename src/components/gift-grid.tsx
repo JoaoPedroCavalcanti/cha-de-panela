@@ -16,6 +16,8 @@ const sortOptions: { value: GiftSortKey; label: string }[] = [
 ]
 
 const PAGE_SIZE = 12
+const POST_PAYMENT_POLL_MS = 1500
+const POST_PAYMENT_POLL_ATTEMPTS = 12
 
 export function GiftGrid() {
   const [selected, setSelected] = useState<GiftItem | null>(null)
@@ -29,6 +31,23 @@ export function GiftGrid() {
   const [count, setCount] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [paidBanner, setPaidBanner] = useState(false)
+  const [syncingPayment, setSyncingPayment] = useState(false)
+  const [paidGiftId, setPaidGiftId] = useState<number | null>(null)
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get("pago") === "1") {
+      setPaidBanner(true)
+      setSyncingPayment(true)
+      const giftParam = Number(params.get("gift"))
+      if (Number.isFinite(giftParam) && giftParam > 0) {
+        setPaidGiftId(giftParam)
+      }
+      window.history.replaceState({}, "", "/presentes")
+    }
+  }, [])
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -69,6 +88,58 @@ export function GiftGrid() {
     }
   }, [debouncedQuery, page, sort])
 
+  // After Asaas redirect, webhook may arrive a bit late — poll until gift is gone.
+  useEffect(() => {
+    if (!syncingPayment) return
+
+    let cancelled = false
+    let attempts = 0
+
+    async function tick() {
+      attempts += 1
+      try {
+        const data = await fetchGifts({
+          q: debouncedQuery,
+          page,
+          pageSize: PAGE_SIZE,
+          sort,
+        })
+        if (cancelled) return
+
+        setItems(data.results)
+        setTotalPages(data.totalPages)
+        setCount(data.count)
+
+        const stillVisible =
+          paidGiftId != null
+            ? data.results.some((gift) => gift.id === paidGiftId)
+            : false
+
+        if (paidGiftId != null && !stillVisible) {
+          setSyncingPayment(false)
+          return
+        }
+      } catch {
+        // keep polling briefly
+      }
+
+      if (attempts >= POST_PAYMENT_POLL_ATTEMPTS) {
+        if (!cancelled) setSyncingPayment(false)
+        return
+      }
+
+      window.setTimeout(() => {
+        if (!cancelled) void tick()
+      }, POST_PAYMENT_POLL_MS)
+    }
+
+    void tick()
+
+    return () => {
+      cancelled = true
+    }
+  }, [syncingPayment, paidGiftId, debouncedQuery, page, sort])
+
   function openGift(gift: GiftItem) {
     setSelected(gift)
     setOpen(true)
@@ -76,6 +147,17 @@ export function GiftGrid() {
 
   return (
     <>
+      {paidBanner ? (
+        <p
+          className="mb-6 rounded-lg border border-border bg-muted/40 px-4 py-3 text-center text-sm text-foreground"
+          role="status"
+        >
+          {syncingPayment
+            ? "Obrigado pelo presente! Confirmando o pagamento e atualizando a lista…"
+            : "Obrigado pelo carinho! Seu presente já foi registrado."}
+        </p>
+      ) : null}
+
       <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <input
           type="search"
@@ -113,7 +195,7 @@ export function GiftGrid() {
         </p>
       ) : null}
 
-      {loading ? (
+      {loading && !syncingPayment ? (
         <p className="py-10 text-center text-sm text-muted-foreground">Carregando…</p>
       ) : null}
 
@@ -125,7 +207,7 @@ export function GiftGrid() {
         </p>
       ) : null}
 
-      {!loading && items.length > 0 ? (
+      {(!loading || syncingPayment) && items.length > 0 ? (
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((gift) => (
             <li
