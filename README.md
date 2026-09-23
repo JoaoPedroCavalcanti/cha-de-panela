@@ -1,6 +1,6 @@
 # Chá de Panela
 
-Site do chá de panela — Next.js (App Router), TypeScript, Tailwind e shadcn/ui. RSVP, mensagens e presentes via API Django (`cha-de-panela-api`); pagamento PIX + link Asaas. Front na Vercel.
+Site do chá de panela — Next.js (App Router), TypeScript, Tailwind e shadcn/ui. RSVP, mensagens e presentes via API Django (`cha-de-panela-api`); pagamento só via Asaas Checkout (PIX ou cartão). Front na Vercel.
 
 ## Rotas
 
@@ -44,14 +44,14 @@ npm start -- --port 43127
 
 Todo o texto/config fica em `src/content/`:
 
-- `event.ts` — nomes, data, local, PIX, link de cartão, URL do site
+- `event.ts` — nomes, data, local, URL do site
 - `story.ts` — blocos da história + fotos
 - `nav.ts` — abas do menu
 - `copy.ts` — textos de UI das páginas
 
-Presentes vêm da API (`GET /api/gifts/`), não de arquivo estático.
+Presentes e pagamento vêm da API (`GET /api/gifts/`, `POST /api/gifts/{id}/checkout/`) — Asaas (PIX ou cartão). Sem PicPay nem chave PIX no front.
 
-Troque placeholders (data, local, chave PIX, etc.) antes do lançamento. Fotos do casal: `public/photos/`.
+Troque placeholders (data, local, etc.) antes do lançamento. Fotos do casal: `public/photos/`.
 
 ## API (RSVP, mensagens, presentes)
 

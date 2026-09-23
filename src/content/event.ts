@@ -2,7 +2,7 @@ import type { EventContent } from "./types"
 
 /**
  * Replace placeholders with real couple details before launch.
- * RSVP and messages go to NEXT_PUBLIC_API_URL.
+ * RSVP, messages and gift checkout go through NEXT_PUBLIC_API_URL (Asaas).
  */
 export const event: EventContent = {
   coupleNames: "Carol & João",
@@ -22,12 +22,6 @@ export const event: EventContent = {
     "Haverá estacionamento na rua e no estacionamento parceiro ao lado.",
     "Crianças são bem-vindas — avise na confirmação se vierem com vocês.",
   ],
-  payment: {
-    pixKey: "70300571470",
-    pixKeyLabel: "CPF",
-    pixQrImageSrc: "/photos/pix-qrcode.png",
-    cardPaymentUrl: "https://www.asaas.com/c/6q5ks9koceclygn5",
-  },
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://cha-de-panela.vercel.app",
   ogImage: "/og.jpg",
   heroImageSrc: "/photos/hero.jpg",

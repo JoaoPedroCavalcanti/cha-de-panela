@@ -18,7 +18,6 @@ type ApiGift = {
   description: string
   amount_brl: string
   image_url: string | null
-  card_payment_url: string
 }
 
 type ApiGiftList = {
@@ -43,7 +42,6 @@ function mapGift(item: ApiGift): GiftItem {
     description: item.description || undefined,
     amountBRL: Number(item.amount_brl),
     imageSrc: item.image_url,
-    cardPaymentUrl: item.card_payment_url || null,
   }
 }
 

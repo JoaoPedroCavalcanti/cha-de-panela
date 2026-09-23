@@ -11,13 +11,13 @@ Branch de trabalho: `main`
 ## Decisões fechadas
 - Front Next.js na Vercel; API Django Ninja + Postgres (`cha-de-panela-api`)
 - **Presentes:** lista/busca/ordenação/paginação → `GET {NEXT_PUBLIC_API_URL}/api/gifts/`; CRUD + imagens no admin da API (`media/` volume)
-- **Pagamento:** PIX (chave/QR + valor só como texto de referência) + cartão via link Asaas
+- **Pagamento:** só Asaas Checkout — PIX ou cartão de crédito (até 3x). Sem PicPay, sem chave PIX/QR estáticos no front
 - **Mensagens aos noivos:** privadas — form → `POST {NEXT_PUBLIC_API_URL}/api/messages/` (admin), **sem mural público**
 - **RSVP / confirmar presença:** form → `POST {NEXT_PUBLIC_API_URL}/api/rsvp/`
 - Lista de presentes: placeholders inventados; casal define conteúdo real depois
 - Nomes reais: `Carol & João` (em `src/content/event.ts`)
 - Fotos do casal: em `public/photos/` (originais locais em `/fotos`, ignorado no git)
-- Data/local/PIX reais: ainda placeholders em `src/content/`
+- Data/local reais: ainda placeholders em `src/content/`
 
 ## Abas / rotas
 | Rota | Aba |
@@ -38,8 +38,9 @@ Branch de trabalho: `main`
 
 ## Fluxo de presentes
 1. Grid de itens → clique abre PaymentSheet
-2. Mostra valor, PIX (copiar), QR opcional, botão cartão (PicPay)
-3. Agradecimento no sheet; item permanece na lista
+2. Sheet mostra valor → botão cria checkout (`POST /api/gifts/{id}/checkout/`) e redireciona ao Asaas (PIX ou cartão)
+3. Após `CHECKOUT_PAID` no webhook, o presente fica `is_active=false` e some da lista (reativável no admin)
+4. Retorno ao site com `?pago=1&gift=` → banner de agradecimento + poll até a lista atualizar
 
 ## Referências de design
 Inspiração visual/UX (aplicar no design-pass; não copiar conteúdo):
@@ -54,22 +55,22 @@ Inspiração visual/UX (aplicar no design-pass; não copiar conteúdo):
 Mobile-first. Evitar visual genérico “AI purple/cream”.
 
 ## O que já está pronto
-- Scaffold Next + páginas das 5 abas + home
-- PaymentSheet (PIX/PicPay)
+- Scaffold Next + páginas das abas + home
+- PaymentSheet → Asaas Checkout (PIX + cartão)
 - Forms Mensagens + RSVP → API Django (`cha-de-panela-api`)
+- Presentes via API + checkout/webhook na API
 - README, OG image, conteúdo placeholder
 - Código na `main` do GitHub
 
 ## Próximo (prioridade)
 1. **Design-pass** com as refs acima (tipografia, cores, hero full-bleed, fotos, motion sutil)
-2. Conteúdo real (nomes, data, local, PIX, lista de presentes, fotos)
-3. CRUD de presentes no backend — feito (`/api/gifts/` + admin + seed)
-4. Deploy Vercel + API hospedada (com volume persistente em `media/`)
-5. Opcional: `package-lock.json` / favicon se faltarem no clone (`npm install` regenera lock)
+2. Conteúdo real (data, local, lista de presentes, fotos)
+3. Deploy Vercel + API hospedada (volume persistente em `media/`) + Asaas produção (webhook com URL fixa)
+4. Opcional: favicon se faltar no clone
 
 ## Fora de escopo
 - Mural público de mensagens
-- Asaas / PIX dinâmico por API
+- PicPay / chave PIX ou QR estáticos no front / link de cartão por presente
 - Reserva/estoque de presentes / contador “já compraram” (até haver demanda)
 - Hospedar no PC do casal
 - MinIO/S3 (usar `media/` + volume enquanto a API tiver disco persistente)
@@ -91,7 +92,7 @@ Mobile-first. Evitar visual genérico “AI purple/cream”.
 - Responsivo (prioridade celular)
 - Copy real em PT-BR (sem lorem)
 - Estados de form: idle / loading / success / error
-- Presentes nunca desaparecem após “pagamento”
+- Presente pago some da lista após confirmação do webhook Asaas
 
 <!-- BEGIN:nextjs-agent-rules -->
 

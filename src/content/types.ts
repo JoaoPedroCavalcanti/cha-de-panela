@@ -17,12 +17,6 @@ export type EventContent = {
   mapUrl: string
   dressCode: string
   notes: string[]
-  payment: {
-    pixKey: string
-    pixKeyLabel: string
-    pixQrImageSrc: string | null
-    cardPaymentUrl: string
-  }
   siteUrl: string
   ogImage: string
   heroImageSrc: string
@@ -55,7 +49,6 @@ export type GiftItem = {
   description?: string
   amountBRL: number
   imageSrc?: string | null
-  cardPaymentUrl?: string | null
 }
 
 export type SiteCopy = {
