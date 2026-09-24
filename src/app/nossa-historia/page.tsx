@@ -53,11 +53,8 @@ export default function NossaHistoriaPage() {
         <section className="border-t border-border/60 bg-muted/30">
           <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 sm:py-20">
             <h2 className="text-center font-heading text-3xl text-foreground sm:text-4xl">
-              Mais momentos
+              Galeria de fotos
             </h2>
-            <p className="mx-auto mt-3 max-w-lg text-center text-muted-foreground">
-              Alguns recortes do caminho — carnaval, jantares, alianças e a família de quatro patas.
-            </p>
             <PhotoGallery photos={story.gallery} idPrefix="momentos" className="mt-10" />
           </div>
         </section>
