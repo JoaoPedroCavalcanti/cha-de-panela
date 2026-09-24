@@ -95,13 +95,6 @@ export default function ChaDePanelaPage() {
                 </a>
               </div>
             </div>
-
-            <div className="grid gap-1 sm:grid-cols-[7rem_1fr] sm:gap-6">
-              <p className="text-[11px] tracking-[0.18em] text-muted-foreground uppercase">
-                Traje
-              </p>
-              <p className="text-lg text-foreground">{event.dressCode}</p>
-            </div>
           </div>
 
           <div className="mt-12 space-y-3 border-t border-foreground/10 pt-10">

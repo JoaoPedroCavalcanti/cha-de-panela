@@ -40,7 +40,7 @@ export default function TitoPage() {
 
       <section className="mt-20">
         <p className="text-center text-[11px] tracking-[0.24em] text-muted-foreground uppercase">
-          Arquivo oficial
+          Galeria
         </p>
         <PhotoGallery
           photos={tito.photos}

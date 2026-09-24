@@ -68,9 +68,7 @@ export function PhotoGallery({
             role="dialog"
             aria-label={photo.alt}
           >
-            <a href={closeHref} className="photo-lb-backdrop" aria-label="Fechar">
-              <span className="sr-only">Fechar</span>
-            </a>
+            <a href={closeHref} className="photo-lb-backdrop" aria-label="Fechar" />
 
             <div className="photo-lb-frame">
               <a href={closeHref} className="photo-lb-btn photo-lb-close" aria-label="Fechar">
