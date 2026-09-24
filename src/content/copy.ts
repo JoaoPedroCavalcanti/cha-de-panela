@@ -9,7 +9,7 @@ export const copy: SiteCopy = {
   gifts: {
     title: "Lista de presentes",
     intro:
-      "A presença de vocês já é o maior presente. Se quiserem contribuir com algo da lista, escolham um item e paguem com PIX ou cartão.",
+      "A sua presença já é o maior presente. Se quiser contribuir com algo da lista, escolha um item e pague com PIX ou cartão. Ou fique a vontade para escolher algo fora da lista.",
     contributeCta: "Contribuir",
   },
   messages: {
