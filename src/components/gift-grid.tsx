@@ -10,6 +10,7 @@ import { fetchGifts, type GiftSortKey } from "@/lib/gifts-api"
 import { formatBRL } from "@/lib/format"
 
 const sortOptions: { value: GiftSortKey; label: string }[] = [
+  { value: "random", label: "Aleatório" },
   { value: "price-desc", label: "Maior preço" },
   { value: "price-asc", label: "Menor preço" },
   { value: "name-asc", label: "Nome A–Z" },
@@ -22,7 +23,8 @@ const POST_PAYMENT_POLL_ATTEMPTS = 12
 export function GiftGrid() {
   const [selected, setSelected] = useState<GiftItem | null>(null)
   const [open, setOpen] = useState(false)
-  const [sort, setSort] = useState<GiftSortKey>("price-desc")
+  const [sort, setSort] = useState<GiftSortKey>("random")
+  const [seed] = useState(() => Math.floor(Math.random() * 2_147_483_647))
   const [query, setQuery] = useState("")
   const [debouncedQuery, setDebouncedQuery] = useState("")
   const [page, setPage] = useState(1)
@@ -67,6 +69,7 @@ export function GiftGrid() {
       page,
       pageSize: PAGE_SIZE,
       sort,
+      seed,
     })
       .then((data) => {
         if (cancelled) return
@@ -86,7 +89,7 @@ export function GiftGrid() {
     return () => {
       cancelled = true
     }
-  }, [debouncedQuery, page, sort])
+  }, [debouncedQuery, page, sort, seed])
 
   // After Asaas redirect, webhook may arrive a bit late — poll until gift is gone.
   useEffect(() => {
@@ -103,6 +106,7 @@ export function GiftGrid() {
           page,
           pageSize: PAGE_SIZE,
           sort,
+          seed,
         })
         if (cancelled) return
 
@@ -138,7 +142,7 @@ export function GiftGrid() {
     return () => {
       cancelled = true
     }
-  }, [syncingPayment, paidGiftId, debouncedQuery, page, sort])
+  }, [syncingPayment, paidGiftId, debouncedQuery, page, sort, seed])
 
   function openGift(gift: GiftItem) {
     setSelected(gift)

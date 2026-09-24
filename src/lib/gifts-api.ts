@@ -1,7 +1,7 @@
 import { getApiBaseUrl } from "@/lib/api"
 import type { GiftItem } from "@/content/types"
 
-export type GiftSortKey = "price-desc" | "price-asc" | "name-asc"
+export type GiftSortKey = "random" | "price-desc" | "price-asc" | "name-asc"
 
 export type GiftListResponse = {
   count: number
@@ -29,6 +29,7 @@ type ApiGiftList = {
 }
 
 const sortToApi: Record<GiftSortKey, string> = {
+  random: "random",
   "price-desc": "price_desc",
   "price-asc": "price_asc",
   "name-asc": "name_asc",
@@ -50,12 +51,17 @@ export async function fetchGifts(params: {
   page?: number
   pageSize?: number
   sort?: GiftSortKey
+  seed?: number
 }): Promise<GiftListResponse> {
+  const sort = params.sort ?? "random"
   const search = new URLSearchParams()
   if (params.q?.trim()) search.set("q", params.q.trim())
   search.set("page", String(params.page ?? 1))
   search.set("page_size", String(params.pageSize ?? 12))
-  search.set("sort", sortToApi[params.sort ?? "price-desc"])
+  search.set("sort", sortToApi[sort])
+  if (sort === "random") {
+    search.set("seed", String(params.seed ?? 0))
+  }
 
   const res = await fetch(`${getApiBaseUrl()}/api/gifts/?${search.toString()}`, {
     headers: { Accept: "application/json" },
