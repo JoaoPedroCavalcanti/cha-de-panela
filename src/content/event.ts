@@ -18,6 +18,11 @@ export const event: EventContent = {
   mapUrl: "https://www.google.com/maps/place/Condom%C3%ADnio+Residencial+Cheverny/data=!4m2!3m1!1s0x0:0x91e850a7a8d0736f?sa=X&ved=1t:2428&ictx=111",
   dressCode: "Esporte fino, cores claras e alegres",
   notes: [],
+  payment: {
+    pixKey: "70300571470",
+    pixKeyLabel: "CPF",
+    pixQrImageSrc: "/photos/pix-qrcode.png",
+  },
   siteUrl:
     process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
     "https://cha-de-panela.vercel.app",

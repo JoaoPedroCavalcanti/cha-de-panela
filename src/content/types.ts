@@ -17,6 +17,11 @@ export type EventContent = {
   mapUrl: string
   dressCode: string
   notes: string[]
+  payment: {
+    pixKey: string
+    pixKeyLabel: string
+    pixQrImageSrc: string | null
+  }
   siteUrl: string
   ogImage: string
   heroImageSrc: string
@@ -61,6 +66,9 @@ export type SiteCopy = {
     title: string
     intro: string
     contributeCta: string
+    openContributionTitle: string
+    openContributionBody: string
+    openContributionCta: string
   }
   messages: {
     title: string

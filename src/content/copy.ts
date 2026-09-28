@@ -11,6 +11,10 @@ export const copy: SiteCopy = {
     intro:
       "A sua presença já é o maior presente. Se quiser contribuir com algo da lista, escolha um item e pague com PIX ou cartão. Ou fique a vontade para escolher algo fora da lista.",
     contributeCta: "Comprar",
+    openContributionTitle: "Prefere contribuir com um valor livre?",
+    openContributionBody:
+      "Se não quiser escolher um item da lista, pode mandar um PIX com o valor que fizer sentido pra você.",
+    openContributionCta: "Ver chave PIX",
   },
   messages: {
     title: "Mensagens aos noivos",
