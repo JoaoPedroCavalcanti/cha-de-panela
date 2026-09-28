@@ -40,10 +40,11 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "text-[11px] font-medium tracking-[0.18em] uppercase transition-colors",
+                  "relative text-[11px] font-medium tracking-[0.18em] uppercase transition-colors",
+                  "after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:bg-foreground after:transition-transform after:duration-300 after:ease-out",
                   active
-                    ? "text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "text-foreground after:scale-x-100"
+                    : "text-muted-foreground after:scale-x-0 hover:text-foreground hover:after:scale-x-100"
                 )}
               >
                 {item.label}
@@ -66,7 +67,7 @@ export function SiteHeader() {
           </summary>
 
           <nav
-            className="fixed inset-x-0 top-16 z-[100] hidden max-h-[calc(100svh-4rem)] overflow-y-auto border-b border-border/60 bg-background px-4 py-3 shadow-sm group-open:block"
+            className="mobile-nav-panel fixed inset-x-0 top-16 z-[100] hidden max-h-[calc(100svh-4rem)] overflow-y-auto border-b border-border/60 bg-background px-4 py-3 shadow-sm group-open:block"
             aria-label="Menu mobile"
           >
             <ul className="flex flex-col">

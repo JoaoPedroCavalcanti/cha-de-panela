@@ -213,10 +213,11 @@ export function GiftGrid() {
 
       {(!loading || syncingPayment) && items.length > 0 ? (
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((gift) => (
+          {items.map((gift, index) => (
             <li
               key={gift.id}
-              className="flex flex-col border-b border-border/70 pb-6 transition-opacity hover:opacity-95"
+              className="flex flex-col border-b border-border/70 pb-6 transition-opacity hover:opacity-95 animate-in fade-in slide-in-from-bottom-2 duration-500 fill-mode-both"
+              style={{ animationDelay: `${Math.min(index, 8) * 45}ms` }}
             >
               <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden bg-muted/40 p-4">
                 {gift.imageSrc ? (
