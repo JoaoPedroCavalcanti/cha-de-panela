@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 
 import { copy } from "@/content/copy"
 import type { GiftItem } from "@/content/types"
+import { LightboxImage } from "@/components/lightbox-image"
 import { PaymentSheet } from "@/components/payment-sheet"
 import { Button } from "@/components/ui/button"
 import { fetchGifts, type GiftSortKey } from "@/lib/gifts-api"
@@ -219,18 +220,21 @@ export function GiftGrid() {
               className="flex flex-col border-b border-border/70 pb-6 transition-opacity hover:opacity-95 animate-in fade-in slide-in-from-bottom-2 duration-500 fill-mode-both"
               style={{ animationDelay: `${Math.min(index, 8) * 45}ms` }}
             >
-              <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden bg-muted/40 p-4">
+              <div className="mb-4 aspect-square bg-muted/40 p-4">
                 {gift.imageSrc ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <LightboxImage
                     src={gift.imageSrc}
                     alt={gift.name}
-                    className="max-h-full max-w-full object-contain"
+                    lightboxId={`gift-${gift.id}`}
+                    buttonClassName="flex h-full w-full items-center justify-center"
+                    className="max-h-full max-w-full cursor-zoom-in object-contain"
                   />
                 ) : (
-                  <span className="font-heading text-3xl text-muted-foreground/40">
-                    {gift.name.charAt(0)}
-                  </span>
+                  <div className="flex h-full w-full items-center justify-center">
+                    <span className="font-heading text-3xl text-muted-foreground/40">
+                      {gift.name.charAt(0)}
+                    </span>
+                  </div>
                 )}
               </div>
               <h2 className="font-heading text-xl text-foreground">{gift.name}</h2>
