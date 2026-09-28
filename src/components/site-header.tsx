@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useEffect, useRef } from "react"
 import { MenuIcon, XIcon } from "lucide-react"
 
 import { navItems } from "@/content/nav"
@@ -10,12 +11,22 @@ import { cn } from "@/lib/utils"
 
 export function SiteHeader() {
   const pathname = usePathname()
+  const menuRef = useRef<HTMLDetailsElement>(null)
+
+  useEffect(() => {
+    menuRef.current?.removeAttribute("open")
+  }, [pathname])
+
+  function closeMenu() {
+    menuRef.current?.removeAttribute("open")
+  }
 
   return (
     <header className="sticky top-0 z-[100] border-b border-border/60 bg-background">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
         <Link
           href="/"
+          onClick={closeMenu}
           className="relative z-[101] font-heading text-xl tracking-tight text-foreground sm:text-2xl"
         >
           {event.coupleNames}
@@ -42,7 +53,7 @@ export function SiteHeader() {
         </nav>
 
         {/* Native details menu: works even if JS hydration fails on mobile/tunnel */}
-        <details className="group relative z-[101] lg:hidden">
+        <details ref={menuRef} className="group relative z-[101] lg:hidden">
           <summary
             className={cn(
               "flex size-12 list-none cursor-pointer touch-manipulation items-center justify-center rounded-lg text-foreground",
@@ -65,6 +76,7 @@ export function SiteHeader() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
+                      onClick={closeMenu}
                       className={cn(
                         "block rounded-md px-3 py-3.5 text-base tracking-wide",
                         active
