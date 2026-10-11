@@ -9,13 +9,6 @@ export type EventContent = {
   partnerTwo: string
   eventTitle: string
   tagline: string
-  dateLabel: string
-  dateISO: string
-  timeLabel: string
-  venueName: string
-  venueAddress: string
-  mapUrl: string
-  dressCode: string
   notes: string[]
   payment: {
     pixKey: string
@@ -76,10 +69,6 @@ export type SiteCopy = {
     privacyNote: string
   }
   rsvp: {
-    title: string
-    intro: string
-  }
-  cha: {
     title: string
     intro: string
   }

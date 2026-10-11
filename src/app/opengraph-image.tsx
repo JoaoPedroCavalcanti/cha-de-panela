@@ -26,7 +26,9 @@ export default function OpenGraphImage() {
           {event.eventTitle}
         </div>
         <div style={{ marginTop: 24, fontSize: 84, lineHeight: 1.05 }}>{event.coupleNames}</div>
-        <div style={{ marginTop: 28, fontSize: 28, letterSpacing: 2 }}>{event.dateLabel}</div>
+        <div style={{ marginTop: 28, fontSize: 28, letterSpacing: 2 }}>
+          {event.tagline}
+        </div>
       </div>
     ),
     { ...size }

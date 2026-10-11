@@ -23,7 +23,7 @@ const sans = Source_Sans_3({
 })
 
 const title = `${event.coupleNames} — ${event.eventTitle}`
-const description = `${event.tagline} ${event.dateLabel}, ${event.timeLabel}.`
+const description = event.tagline
 
 export const metadata: Metadata = {
   metadataBase: new URL(event.siteUrl),

@@ -10,13 +10,6 @@ export const event: EventContent = {
   partnerTwo: "João",
   eventTitle: "Chá de Panela",
   tagline: "Venha celebrar conosco o começo do nosso sonho.",
-  dateLabel: "Sábado, 17 de outubro de 2026",
-  dateISO: "2026-10-17",
-  timeLabel: "11h00",
-  venueName: "Condomínio Residencial Cheverny",
-  venueAddress: "Av. Romualdo Galvão, 1834 - Lagoa Nova",
-  mapUrl: "https://www.google.com/maps/place/Condom%C3%ADnio+Residencial+Cheverny/data=!4m2!3m1!1s0x0:0x91e850a7a8d0736f?sa=X&ved=1t:2428&ictx=111",
-  dressCode: "Esporte fino, cores claras e alegres",
   notes: [],
   payment: {
     pixKey: "70300571470",

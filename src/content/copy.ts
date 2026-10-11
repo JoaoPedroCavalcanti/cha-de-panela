@@ -27,9 +27,4 @@ export const copy: SiteCopy = {
     intro:
       "Confirme se poderá estar conosco. Assim organizamos o espaço e a mesa com carinho.",
   },
-  cha: {
-    title: "Chá de panela",
-    intro:
-      "",
-  },
 }

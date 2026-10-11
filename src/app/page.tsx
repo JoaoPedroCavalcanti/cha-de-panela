@@ -27,10 +27,7 @@ export default function HomePage() {
           <h1 className="mt-4 font-heading text-5xl leading-[1.05] text-white sm:text-7xl md:text-8xl animate-in fade-in slide-in-from-bottom-2 duration-1000">
             {event.coupleNames}
           </h1>
-          <p className="mt-5 text-[11px] font-medium tracking-[0.22em] text-white/70 uppercase sm:text-xs animate-in fade-in duration-1000 delay-150">
-            {event.dateLabel} · {event.timeLabel}
-          </p>
-          <p className="mt-6 max-w-md text-base leading-relaxed text-white/85 sm:text-lg animate-in fade-in duration-1000 delay-200">
+          <p className="mt-6 max-w-md text-base leading-relaxed text-white/85 sm:text-lg animate-in fade-in duration-1000 delay-150">
             {copy.home.supporting}
           </p>
           <div className="mt-9 flex w-full max-w-md flex-col gap-3 sm:flex-row sm:justify-center animate-in fade-in slide-in-from-bottom-3 duration-1000 delay-300">

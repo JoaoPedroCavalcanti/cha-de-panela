@@ -8,7 +8,7 @@ Site do chá de panela — Next.js (App Router), TypeScript, Tailwind e shadcn/u
 |---|---|
 | `/` | Home (hero + CTAs) |
 | `/nossa-historia` | Nossa história |
-| `/cha-de-panela` | Data, local e infos |
+| `/tito` | Tito |
 | `/mensagens` | Mensagem privada ao casal |
 | `/presentes` | Lista de contribuições |
 | `/confirmar-presenca` | RSVP |
